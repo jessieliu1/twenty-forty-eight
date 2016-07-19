@@ -28,6 +28,8 @@ public class Tester
 		}
 		
 		System.out.println(b);
+		b.swipeLeft();
+		System.out.println(b);
 		System.out.println(b.moreMoves());
 
 		

@@ -10,6 +10,7 @@ public class GameBoard
 	public static final int STANDARD_DIMENSIONS = 4;
 	private NumberTile[][] board;
 	private int dimension;
+	//number of non empty tiles
 	private int numberOfTiles;
 	
 	/**
@@ -148,7 +149,63 @@ public class GameBoard
 		return sb.toString();	
 	}
 	
-	
-	
+	/**
+	 * 
+	 * @return int the addition to the score after the swipe
+	 */
+	public int swipeLeft()
+	{
+		int scoreAdd = 0;
+		for (int row = 0; row < dimension; row++)
+		{
+			int last = 0;
+			int curr = 1;
+			while (curr < dimension)
+			{
+				NumberTile lastTile = board[row][last];
+				
+				if (lastTile.isEmpty())
+				{
+					while (curr < dimension && board[row][curr].isEmpty())
+					{
+						curr++;
+					}
+					
+					if (curr < dimension)
+					{
+						lastTile.setValue(board[row][curr].getValue());
+						board[row][curr].setValue(0);
+						numberOfTiles--;
+						curr++;
+					}
+				}
+				
+				else
+				{
+					while (curr < dimension && board[row][curr].isEmpty())
+					{
+						curr++;
+					}
+					if (curr < dimension)
+					{
+						if (board[row][curr].getValue() == lastTile.getValue())
+						{
+							lastTile.setValue(2 * lastTile.getValue());
+							scoreAdd += 2 * lastTile.getValue();
+							board[row][curr].setValue(0);
+							numberOfTiles--;
+							last++;
+							curr = last + 1;
+						}
+						else
+						{
+							last++;
+						}
+					}
+				}		
+			}
+		}
+		return scoreAdd;
+	}
 	
 }
