@@ -191,7 +191,7 @@ public class GameBoard
 						if (board[row][curr].getValue() == lastTile.getValue())
 						{
 							lastTile.setValue(2 * lastTile.getValue());
-							scoreAdd += 2 * lastTile.getValue();
+							scoreAdd += lastTile.getValue();
 							board[row][curr].setValue(0);
 							numberOfTiles--;
 							last++;
@@ -207,5 +207,65 @@ public class GameBoard
 		}
 		return scoreAdd;
 	}
+	
+	/**
+	 * 
+	 * @return int the addition to the score after the swipe
+	 */
+	public int swipeRight()
+	{
+		int scoreAdd = 0;
+		for (int row = 0; row < dimension; row++)
+		{
+			int last = dimension - 1;
+			int curr = dimension - 2;
+			while (curr >= 0)
+			{
+				NumberTile lastTile = board[row][last];
+				
+				if (lastTile.isEmpty())
+				{
+					while (curr >=0 && board[row][curr].isEmpty())
+					{
+						curr--;
+					}
+					
+					if (curr >= 0)
+					{
+						lastTile.setValue(board[row][curr].getValue());
+						board[row][curr].setValue(0);
+						numberOfTiles--;
+						curr--;
+					}
+				}
+				
+				else
+				{
+					while (curr >=0 && board[row][curr].isEmpty())
+					{
+						curr--;
+					}
+					if (curr >= 0)
+					{
+						if (board[row][curr].getValue() == lastTile.getValue())
+						{
+							lastTile.setValue(2 * lastTile.getValue());
+							scoreAdd += lastTile.getValue();
+							board[row][curr].setValue(0);
+							numberOfTiles--;
+							last--;
+							curr = last - 1;
+						}
+						else
+						{
+							last--;
+						}
+					}
+				}		
+			}
+		}
+		return scoreAdd;
+	}
+	
 	
 }
