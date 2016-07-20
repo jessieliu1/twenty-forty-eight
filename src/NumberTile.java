@@ -75,6 +75,7 @@ public class NumberTile
 	
 	/**
 	 * Returns the tile as a string. If the tile is empty returns "-".
+	 * @return the tile as a string
 	 */
 	public String toString()
 	{

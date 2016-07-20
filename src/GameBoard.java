@@ -15,7 +15,7 @@ public class GameBoard
 	
 	/**
 	 * Default game board dimensions are 4x4. Board always starts with two 
-	 * 2 tiles placed in a random locations.
+	 * 2 tiles placed in random locations.
 	 */
 	public GameBoard()
 	{
@@ -103,11 +103,15 @@ public class GameBoard
 	 */
 	public boolean moreMoves()
 	{
+		//if the board isn't full there are more moves
 		if (this.isFull() == false)
 		{
 			return true;
 		}
+		
 		boolean more = false;
+		//check each cell of the board and see if any adjacent cells
+		//can be merged with it
 		for (int i = 0; i < dimension; i++)
 		{
 			for (int j = 0; j < dimension; j++)
@@ -115,13 +119,14 @@ public class GameBoard
 				int currVal = board[i][j].getValue();
 				if (currVal != 0)
 				{
-
-					if (j + 1 < dimension && board[i][j + 1].getValue() == currVal)
+					if (j + 1 < dimension 
+							&& board[i][j + 1].getValue() == currVal)
 					{
 						more = true;
 					}					
 
-					if (i + 1 < dimension && board[i + 1][j].getValue() == currVal)
+					if (i + 1 < dimension 
+							&& board[i + 1][j].getValue() == currVal)
 					{
 						more = true;
 					}
@@ -142,7 +147,7 @@ public class GameBoard
 		{
 			for (int j = 0; j < dimension; j++)
 			{
-				sb.append(String.format("%5d", board[i][j].getValue()));
+				sb.append(String.format("%5s", board[i][j].toString()));
 			}
 			sb.append("\n");
 		}
@@ -150,21 +155,22 @@ public class GameBoard
 	}
 	
 	/**
-	 * 
-	 * @return int the addition to the score after the swipe
+	 * Swipes left, collapsing appropriate tiles. Adds a new 2 tile.
+	 * @return the addition to the score after the swipe
 	 */
 	public int swipeLeft()
 	{
 		int scoreAdd = 0;
+		
 		for (int row = 0; row < dimension; row++)
 		{
 			int last = 0;
 			int curr = 1;
 			while (curr < dimension)
 			{
-				NumberTile lastTile = board[row][last];
-				
-				if (lastTile.isEmpty())
+				//if the tile is empty, merge it with the next non empty tile 
+				//to its right if it exists.
+				if (board[row][last].isEmpty())
 				{
 					while (curr < dimension && board[row][curr].isEmpty())
 					{
@@ -173,26 +179,36 @@ public class GameBoard
 					
 					if (curr < dimension)
 					{
-						lastTile.setValue(board[row][curr].getValue());
+						board[row][last] = 
+								new NumberTile(board[row][curr].getValue());
 						board[row][curr].setValue(0);
-						numberOfTiles--;
+
 						curr++;
 					}
 				}
 				
+				//if the tile is not empty, merge it with the next non 
+				// empty tile with the same value
 				else
 				{
 					while (curr < dimension && board[row][curr].isEmpty())
 					{
 						curr++;
 					}
+					
 					if (curr < dimension)
 					{
-						if (board[row][curr].getValue() == lastTile.getValue())
+						//if the values of the two tiles are equal, 
+						//merge the tiles
+						if (board[row][curr].getValue() 
+								== board[row][last].getValue())
 						{
-							lastTile.setValue(2 * lastTile.getValue());
-							scoreAdd += lastTile.getValue();
+							board[row][last]
+									.setValue(2 * board[row][last].getValue());
+							//add the value of merged tile to the score addition
+							scoreAdd += board[row][last].getValue();
 							board[row][curr].setValue(0);
+							//since tiles were merged number of tiles decrements
 							numberOfTiles--;
 							last++;
 							curr = last + 1;
@@ -205,12 +221,15 @@ public class GameBoard
 				}		
 			}
 		}
+		
+		//after every swipe, insert a random tile
+		insertTwo();
 		return scoreAdd;
 	}
 	
 	/**
-	 * 
-	 * @return int the addition to the score after the swipe
+	 * Swipes right, collapsing appropriate tiles. Adds a new 2 tile.
+	 * @return the addition to the score after the swipe
 	 */
 	public int swipeRight()
 	{
@@ -218,23 +237,22 @@ public class GameBoard
 		for (int row = 0; row < dimension; row++)
 		{
 			int last = dimension - 1;
-			int curr = dimension - 2;
+			int curr = last - 1;
 			while (curr >= 0)
 			{
-				NumberTile lastTile = board[row][last];
-				
-				if (lastTile.isEmpty())
+				if (board[row][last].isEmpty())
 				{
-					while (curr >=0 && board[row][curr].isEmpty())
+					while (curr >= 0 && board[row][curr].isEmpty())
 					{
 						curr--;
 					}
 					
 					if (curr >= 0)
 					{
-						lastTile.setValue(board[row][curr].getValue());
+						board[row][last] 
+								= new NumberTile(board[row][curr].getValue());
 						board[row][curr].setValue(0);
-						numberOfTiles--;
+						
 						curr--;
 					}
 				}
@@ -247,11 +265,14 @@ public class GameBoard
 					}
 					if (curr >= 0)
 					{
-						if (board[row][curr].getValue() == lastTile.getValue())
+						if (board[row][curr].getValue() 
+								== board[row][last].getValue())
 						{
-							lastTile.setValue(2 * lastTile.getValue());
-							scoreAdd += lastTile.getValue();
+							board[row][last]
+									.setValue(2 * board[row][last].getValue());
+							scoreAdd += board[row][last].getValue();
 							board[row][curr].setValue(0);
+							
 							numberOfTiles--;
 							last--;
 							curr = last - 1;
@@ -264,8 +285,141 @@ public class GameBoard
 				}		
 			}
 		}
+		insertTwo();
 		return scoreAdd;
 	}
 	
+	/**
+	 * Swipes down, collapsing appropriate tiles. Adds a new 2 tile.
+	 * @return the addition to the score after the swipe
+	 */
+	public int swipeDown()
+	{
+		int scoreAdd = 0;
+		for (int col = 0; col < dimension; col++)
+		{
+			int last = dimension - 1;
+			int curr = last - 1;
+			while (curr >= 0)
+			{
+				if (board[last][col].isEmpty())
+				{
+					while (curr >= 0 && board[curr][col].isEmpty())
+					{
+						curr--;
+					}
+					
+					if (curr >= 0)
+					{
+						board[last][col] 
+								= new NumberTile(board[curr][col].getValue());
+						board[curr][col].setValue(0);
+						
+						curr--;
+					}
+				}
+				
+				else
+				{
+					while (curr >=0 && board[curr][col].isEmpty())
+					{
+						curr--;
+					}
+					if (curr >= 0)
+					{
+						if (board[curr][col].getValue() 
+								               == board[last][col].getValue()) 
+						{
+							board[last][col]
+									.setValue(2 * board[last][col].getValue());
+							scoreAdd += board[last][col].getValue();
+							board[curr][col].setValue(0);
+							
+							numberOfTiles--;
+							last--;
+							curr = last - 1;
+						}
+						else
+						{
+							last--;
+						}
+					}
+				}		
+			}
+		}
+		insertTwo();
+		return scoreAdd;
+	}
 	
+	/**
+	 * Swipes up, collapsing appropriate tiles. Adds a new 2 tile.
+	 * @return the addition to the score after the swipe
+	 */
+	public int swipeUp()
+	{
+		int scoreAdd = 0;
+		for (int col = 0; col < dimension; col++)
+		{
+			int last = 0;
+			int curr = 1;
+			while (curr < dimension)
+			{
+				if (board[last][col].isEmpty())
+				{
+					while (curr < dimension && board[curr][col].isEmpty())
+					{
+						curr++;
+					}
+					
+					if (curr < dimension)
+					{
+						board[last][col] 
+								 = new NumberTile(board[curr][col].getValue());
+						board[curr][col].setValue(0);
+						
+						curr++;
+					}
+				}
+				
+				else
+				{
+					while (curr < dimension && board[curr][col].isEmpty())
+					{
+						curr++;
+					}
+					if (curr < dimension)
+					{
+						if (board[curr][col].getValue() 
+								         == board[last][col].getValue())
+						{
+
+							board[last][col]
+									 .setValue(2 * board[last][col].getValue());
+							scoreAdd += board[last][col].getValue();
+							board[curr][col].setValue(0);
+
+							numberOfTiles--;
+							last++;
+							curr = last + 1;
+						}
+						else
+						{
+							last++;
+						}
+					}
+				}		
+			}
+		}
+		insertTwo();
+		return scoreAdd;
+	}
+	
+	/**
+	 * Returns the dimension of the board
+	 * @return the dimension of the board
+	 */
+	public int getDimension()
+	{
+		return dimension;
+	}
 }
