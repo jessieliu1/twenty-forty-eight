@@ -216,6 +216,10 @@ public class GameBoard
 						else
 						{
 							last++;
+							if (last == curr)
+							{
+								curr++;
+							}
 						}
 					}
 				}		
@@ -280,6 +284,10 @@ public class GameBoard
 						else
 						{
 							last--;
+							if (last == curr)
+							{
+								curr--;
+							}
 						}
 					}
 				}		
@@ -342,6 +350,10 @@ public class GameBoard
 						else
 						{
 							last--;
+							if (last == curr)
+							{
+								curr--;
+							}
 						}
 					}
 				}		
@@ -405,6 +417,10 @@ public class GameBoard
 						else
 						{
 							last++;
+							if (last == curr)
+							{
+								curr++;
+							}
 						}
 					}
 				}		
