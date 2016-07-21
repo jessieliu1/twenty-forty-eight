@@ -161,6 +161,7 @@ public class GameBoard
 	public int swipeLeft()
 	{
 		int scoreAdd = 0;
+		boolean boardChanged = false;
 		
 		for (int row = 0; row < dimension; row++)
 		{
@@ -182,7 +183,8 @@ public class GameBoard
 						board[row][last] = 
 								new NumberTile(board[row][curr].getValue());
 						board[row][curr].setValue(0);
-
+						
+						boardChanged = true;
 						curr++;
 					}
 				}
@@ -211,6 +213,8 @@ public class GameBoard
 							//since tiles were merged number of tiles decrements
 							numberOfTiles--;
 							last++;
+							
+							boardChanged = true;
 							curr = last + 1;
 						}
 						else
@@ -226,8 +230,12 @@ public class GameBoard
 			}
 		}
 		
-		//after every swipe, insert a random tile
-		insertTwo();
+		//after every swipe, insert a random tile only if the 
+		//swipe actually changed anything
+		if (boardChanged)
+		{
+			insertTwo();
+		}
 		return scoreAdd;
 	}
 	
@@ -238,6 +246,8 @@ public class GameBoard
 	public int swipeRight()
 	{
 		int scoreAdd = 0;
+		boolean boardChanged = false;
+
 		for (int row = 0; row < dimension; row++)
 		{
 			int last = dimension - 1;
@@ -257,6 +267,7 @@ public class GameBoard
 								= new NumberTile(board[row][curr].getValue());
 						board[row][curr].setValue(0);
 						
+						boardChanged = true;
 						curr--;
 					}
 				}
@@ -278,6 +289,8 @@ public class GameBoard
 							board[row][curr].setValue(0);
 							
 							numberOfTiles--;
+							boardChanged = true;
+							
 							last--;
 							curr = last - 1;
 						}
@@ -293,7 +306,10 @@ public class GameBoard
 				}		
 			}
 		}
-		insertTwo();
+		if (boardChanged)
+		{
+			insertTwo();
+		}
 		return scoreAdd;
 	}
 	
@@ -304,6 +320,8 @@ public class GameBoard
 	public int swipeDown()
 	{
 		int scoreAdd = 0;
+		boolean boardChanged = false;
+		
 		for (int col = 0; col < dimension; col++)
 		{
 			int last = dimension - 1;
@@ -323,6 +341,7 @@ public class GameBoard
 								= new NumberTile(board[curr][col].getValue());
 						board[curr][col].setValue(0);
 						
+						boardChanged = true;
 						curr--;
 					}
 				}
@@ -344,6 +363,8 @@ public class GameBoard
 							board[curr][col].setValue(0);
 							
 							numberOfTiles--;
+							boardChanged = true;
+							
 							last--;
 							curr = last - 1;
 						}
@@ -359,7 +380,10 @@ public class GameBoard
 				}		
 			}
 		}
-		insertTwo();
+		if (boardChanged)
+		{
+			insertTwo();
+		}
 		return scoreAdd;
 	}
 	
@@ -370,6 +394,8 @@ public class GameBoard
 	public int swipeUp()
 	{
 		int scoreAdd = 0;
+		boolean boardChanged = false; 
+		
 		for (int col = 0; col < dimension; col++)
 		{
 			int last = 0;
@@ -389,6 +415,7 @@ public class GameBoard
 								 = new NumberTile(board[curr][col].getValue());
 						board[curr][col].setValue(0);
 						
+						boardChanged = true;
 						curr++;
 					}
 				}
@@ -411,6 +438,8 @@ public class GameBoard
 							board[curr][col].setValue(0);
 
 							numberOfTiles--;
+							boardChanged = true;
+							
 							last++;
 							curr = last + 1;
 						}
@@ -426,7 +455,10 @@ public class GameBoard
 				}		
 			}
 		}
-		insertTwo();
+		if (boardChanged)
+		{
+			insertTwo();
+		}
 		return scoreAdd;
 	}
 	

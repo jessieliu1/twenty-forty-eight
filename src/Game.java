@@ -1,6 +1,6 @@
 /**
  * Represents a 2048 game
- * @author jessieliu
+ * @author Jessie Liu
  *
  */
 public class Game 
@@ -62,7 +62,13 @@ public class Game
 			System.out.println(board);
 			System.out.println("Score is: " + score);
 	  }
-	  System.out.println("game over!");
+	  player.updateScore(score);
+	  player.incrementGames();
+	  //update player in database
+	  
+	  board = new GameBoard();
+	  
+	  System.out.println("Game over!");
 	}
 	
 	

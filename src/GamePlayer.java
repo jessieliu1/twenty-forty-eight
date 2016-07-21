@@ -51,5 +51,10 @@ public class GamePlayer
 		gamesPlayed++;
 	}
 	
+	public int getHighScore()
+	{
+		return highScore;
+	}
+	
 
 }

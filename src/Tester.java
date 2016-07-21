@@ -8,9 +8,12 @@ public class Tester
 		Game g1 = new Game(j);
 		try {
 			g1.playGame();
+			Game g2 = new Game(j);
+			g2.playGame();
 		} catch (InvalidMoveException e) {
 			System.out.println("ur thinker suks");
 		}
+		System.out.println(j.getHighScore());
 		
 	}
 
