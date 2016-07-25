@@ -32,6 +32,10 @@ public class Game
 		score = 0;
 	}
 	
+	/**
+	 * Plays the game with a given player 
+	 * @throws InvalidMoveException
+	 */
 	public void playGame() throws InvalidMoveException
 	{
 		System.out.println(board);
@@ -62,9 +66,11 @@ public class Game
 			System.out.println(board);
 			System.out.println("Score is: " + score);
 	  }
+		
 	  player.updateScore(score);
 	  player.incrementGames();
-	  //update player in database
+	  
+	  //TODO: update player in database
 	  
 	  board = new GameBoard();
 	  

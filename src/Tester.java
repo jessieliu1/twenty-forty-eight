@@ -1,4 +1,3 @@
-import java.util.Arrays;
 
 public class Tester 
 {
@@ -11,7 +10,7 @@ public class Tester
 			Game g2 = new Game(j);
 			g2.playGame();
 		} catch (InvalidMoveException e) {
-			System.out.println("ur thinker suks");
+			System.out.println("your thinker suks");
 		}
 		System.out.println(j.getHighScore());
 		
