@@ -21,6 +21,18 @@ public class GamePlayer
 	}
 	
 	/**
+	 * Defaults thinker as a random thinker
+	 * @param name
+	 */
+	public GamePlayer(String name)
+	{
+		this.name = name;
+		highScore = 0;
+		gamesPlayed = 0;
+		myThinker = new RandomThinker();
+	}
+	
+	/**
 	 * Chooses the next move, based on a thinking strategy 
 	 * and the state of the game board
 	 * @param gb the game board
@@ -44,6 +56,15 @@ public class GamePlayer
 	}
 	
 	/**
+	 * Changes the way the player thinks - aka changes its thinker
+	 * @param t the new thinker to change to
+	 */
+	public void changeThinker(Thinker t)
+	{
+		myThinker = t;
+	}
+	
+	/**
 	 * Increments the number of games played by the player
 	 */
 	public void incrementGames()
@@ -51,9 +72,18 @@ public class GamePlayer
 		gamesPlayed++;
 	}
 	
+	/**
+	 * Gets the high score of the player
+	 * @return the high score of the player
+	 */
 	public int getHighScore()
 	{
 		return highScore;
+	}
+	
+	public String getName()
+	{
+		return name;
 	}
 	
 

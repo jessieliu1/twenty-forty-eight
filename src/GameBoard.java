@@ -91,7 +91,7 @@ public class GameBoard
 		return true;
 	}
 	
-	public NumberTile[][] getBoard()
+	public NumberTile[][] toArray()
 	{
 		return board;
 	}
