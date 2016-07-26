@@ -18,13 +18,19 @@ public class GameServer
 			server = new ServerSocket(port, 10);
 			while (true)
 			{
-				Socket connection = server.accept();
+				System.out.println("test");
+				
+//				GamePlayer play = 
+//						new GamePlayer(server.accept().getInetAddress().getHostName());
+				
+//				Socket connection = server.accept();
+				System.out.println("here?");
 				//THOUGHTS: make a new player every time 
 				//if a player's thinker needs to learn put in a point where 
 				//games can be played many times
-				GamePlayer play = 
-						new GamePlayer(connection.getInetAddress().getHostName());
-;				new GameThread(server.accept(), play).start();
+//				GamePlayer play = 
+//						new GamePlayer(connection.getInetAddress().getHostName());
+				new GameThread(server.accept(), new GamePlayer("player 1")).start();
 			}
 		}
 		catch(IOException io)

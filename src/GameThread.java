@@ -22,38 +22,46 @@ public class GameThread extends Thread
             							new InputStreamReader(
             									socket.getInputStream()));) 
     	{
-    		out.println("Hello " + player.getName());
     		out.println("Would you like to play? (Y/N)");
     		if (in.readLine().equalsIgnoreCase("Y"))
     		{
+    			System.out.println("yo");
 	    		Game g = new Game(player);
-	    		@SuppressWarnings("unused")
-				String inputLine;
+	    		System.out.println("yUP");
+//	    		@SuppressWarnings("unused")
+//				String inputLine;
+	    		
 	    		//while the game isn't over and there is still non null input
 	    		//TODO: set up to ask to play more games
-	    		while ((inputLine = in.readLine()) != null)
+	    		
+//	    		while ((inputLine = in.readLine()) != null)
+	    		System.out.println(g.getBoard().toString());
+//				out.println(g.getBoard().toString());
+				while(!g.isGameOver())
 	    		{
 	    			try 
 	    			{
-	    				GameBoard gb = g.playNextMove();
+	    				out.println("What is your next move?");
+	    				String input = in.readLine();
+	    				GameBoard gb = g.playNextMove(input.trim());
 	    				if (gb != null)
 	    				{
-	    					out.println(gb.toString());
+	    					System.out.println(g.getBoard().toString());
+//	    					out.println(gb.toString());
 	    				}
-	    				else
-	    				{
-	    					out.println("Game Over! Score was: " + g.getScore());
-	    					//move break if you wanna play more games
-	    					break;
-	    				}
+	    				
 					} 
 	    			catch (InvalidMoveException e) 
 	    			{
 						e.printStackTrace();
 					}
 	    		}
+				out.println("Game Over! Score was: " + g.getScore());
     		}
-    		out.println("Bye!");
+
+		
+			//move break if you wanna play more games
+
     		in.close();
     		out.close();
     		socket.close();

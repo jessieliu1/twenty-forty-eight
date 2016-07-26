@@ -37,13 +37,12 @@ public class Game
 	 * @return 
 	 * @throws InvalidMoveException
 	 */
-	public GameBoard playNextMove() throws InvalidMoveException
+	public GameBoard playNextMove(String nextMove) throws InvalidMoveException
 	{
 		//if the game isn't over, play the next move
 		//and return the updated board
 		if (!isGameOver())
 		{
-			String nextMove = player.nextMove(board);
 			if (nextMove.toUpperCase().equals("L"))
 			{
 				score += board.swipeLeft();
@@ -91,7 +90,7 @@ public class Game
 	
 	public boolean isGameOver()
 	{
-		return board.moreMoves();
+		return !board.moreMoves();
 	}
 	
 	//maybe don't have a getBoard
