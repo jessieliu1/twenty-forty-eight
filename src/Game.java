@@ -34,15 +34,17 @@ public class Game
 	
 	/**
 	 * Plays the game with a given player 
+	 * @param the next move of the user. must be "L", "R", "U", or "D"
+	 * 			case insensitive
+	 * @return the board after the move
 	 * @throws InvalidMoveException
 	 */
-	public void playGame() throws InvalidMoveException
+	public GameBoard playNextMove(String nextMove) throws InvalidMoveException
 	{
-		System.out.println(board);
-		while(board.moreMoves())
+		//if the game isn't over, play the next move
+		//and return the updated board
+		if (!isGameOver())
 		{
-			String nextMove = player.nextMove(board);
-			System.out.println(nextMove);
 			if (nextMove.toUpperCase().equals("L"))
 			{
 				score += board.swipeLeft();
@@ -63,19 +65,47 @@ public class Game
 			{
 				throw new InvalidMoveException();
 			}
-			System.out.println(board);
-			System.out.println("Score is: " + score);
-	  }
+			
+			return board;
+		}
 		
-	  player.updateScore(score);
-	  player.incrementGames();
-	  
-	  //TODO: update player in database
-	  
-	  board = new GameBoard();
-	  
-	  System.out.println("Game over!");
+		//otherwise, end the game and return a null board
+		else
+		{
+			this.gameOver();
+			return null;
+		}
 	}
 	
+	/**
+	 * Updates player info after a game ends
+	 */
+	public void gameOver()
+	{
+		if (isGameOver())
+		{
+			player.updateScore(score);
+			player.incrementGames();
+		}
+	}
+	
+	/**
+	 * Returns if the game is over
+	 */
+	public boolean isGameOver()
+	{
+		return !board.moreMoves();
+	}
+	
+
+	public GameBoard getBoard()
+	{
+		return board;
+	}
+	
+	public int getScore()
+	{
+		return score;
+	}
 	
 }
