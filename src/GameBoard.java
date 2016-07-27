@@ -186,7 +186,7 @@ public class GameBoard
 			{
 				sb.append(String.format("%6s", board[i][j].toString()));
 			}
-			sb.append(":");
+			sb.append("\n");
 		}
 		return sb.toString();	
 	}

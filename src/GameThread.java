@@ -36,7 +36,7 @@ public class GameThread extends Thread
 	    		
 //	    		while ((inputLine = in.readLine()) != null)
 //	    		System.out.println(Arrays.toString(g.getBoard().toString().split(":")));
-				out.println(g.getBoard().toString());
+				out.println(g.getBoard().toString().replace("\n", ":"));
 				System.out.println("just printed first board");
 //				out.println("What move?");
 				while(!g.isGameOver())
@@ -47,8 +47,8 @@ public class GameThread extends Thread
 	    				GameBoard gb = g.playNextMove(input.trim());
 	    				if (gb != null)
 	    				{
-	    					System.out.println(Arrays.toString(gb.toString().split(":")));
-	    					out.println(gb.toString());
+	    					System.out.println(Arrays.toString(gb.toString().split("\n")));
+	    					out.println(gb.toString().replace("\n", ":"));
 	    				}
 	    				
 					} 
