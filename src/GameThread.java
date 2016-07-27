@@ -1,4 +1,5 @@
 import java.net.*;
+import java.util.Arrays;
 import java.io.*;
 
 public class GameThread extends Thread
@@ -22,12 +23,11 @@ public class GameThread extends Thread
             							new InputStreamReader(
             									socket.getInputStream()));) 
     	{
-    		out.println("Would you like to play? (Y/N)");
+    		out.println("Hello " + player.getName() + ", would you like to play? (Y/N)");
     		if (in.readLine().equalsIgnoreCase("Y"))
     		{
-    			System.out.println("yo");
 	    		Game g = new Game(player);
-	    		System.out.println("yUP");
+	    		System.out.println("yes");
 //	    		@SuppressWarnings("unused")
 //				String inputLine;
 	    		
@@ -35,19 +35,20 @@ public class GameThread extends Thread
 	    		//TODO: set up to ask to play more games
 	    		
 //	    		while ((inputLine = in.readLine()) != null)
-	    		System.out.println(g.getBoard().toString());
-//				out.println(g.getBoard().toString());
+//	    		System.out.println(Arrays.toString(g.getBoard().toString().split(":")));
+				out.println(g.getBoard().toString());
+				System.out.println("just printed first board");
+//				out.println("What move?");
 				while(!g.isGameOver())
 	    		{
 	    			try 
 	    			{
-	    				out.println("What is your next move?");
 	    				String input = in.readLine();
 	    				GameBoard gb = g.playNextMove(input.trim());
 	    				if (gb != null)
 	    				{
-	    					System.out.println(g.getBoard().toString());
-//	    					out.println(gb.toString());
+	    					System.out.println(Arrays.toString(gb.toString().split(":")));
+	    					out.println(gb.toString());
 	    				}
 	    				
 					} 

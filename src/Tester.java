@@ -20,7 +20,7 @@ public class Tester
 //		System.out.println(j.getHighScore());
 //		System.out.println("but why");
 		
-		GameServer testServer = new GameServer(6789);
+		GameServer testServer = new GameServer(6787);
 		testServer.startRunning();
 		
 	}

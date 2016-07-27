@@ -1,7 +1,8 @@
+import java.security.InvalidParameterException;
 import java.util.Arrays;
 
 /**
- * Represents the game board for the game 2048. Boards are always square.
+ * Represents the game board for the game 2048. Boards should be square.
  * @author Jessie Liu
  *
  */
@@ -51,6 +52,42 @@ public class GameBoard
 		insertTwo();
 		insertTwo();
 	}
+	
+	/**
+	 * Create a game board from an existing square number tile array
+	 * @param nt a number tile array
+	 */
+	public GameBoard(NumberTile[][] nt)
+	{
+		if (nt.length == nt[0].length)
+		{
+			board = nt;
+			dimension = nt.length;
+			numberOfTiles = 0;
+			for (int i = 0; i < dimension; i++)
+			{
+				for (int j = 0; j < dimension; j++)
+				{
+					if (board[i][j] == null)
+					{
+						throw new InvalidParameterException("Board cannot have null "
+								+ "elements");
+					}
+					else if(!board[i][j].isEmpty())
+					{
+						numberOfTiles++;
+					}
+				}
+			}
+		}
+		else
+		{
+			throw new InvalidParameterException("Board must be square");
+		}
+		
+	}
+	
+	
 	
 	/**
 	 * Inserts a 2 number tile in a random empty spot on the board
@@ -147,9 +184,9 @@ public class GameBoard
 		{
 			for (int j = 0; j < dimension; j++)
 			{
-				sb.append(String.format("%5s", board[i][j].toString()));
+				sb.append(String.format("%6s", board[i][j].toString()));
 			}
-			sb.append("\n");
+			sb.append(":");
 		}
 		return sb.toString();	
 	}

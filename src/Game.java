@@ -34,7 +34,9 @@ public class Game
 	
 	/**
 	 * Plays the game with a given player 
-	 * @return 
+	 * @param the next move of the user. must be "L", "R", "U", or "D"
+	 * 			case insensitive
+	 * @return the board after the move
 	 * @throws InvalidMoveException
 	 */
 	public GameBoard playNextMove(String nextMove) throws InvalidMoveException
@@ -68,7 +70,6 @@ public class Game
 		}
 		
 		//otherwise, end the game and return a null board
-		//should I end the game?
 		else
 		{
 			this.gameOver();
@@ -88,12 +89,15 @@ public class Game
 		}
 	}
 	
+	/**
+	 * Returns if the game is over
+	 */
 	public boolean isGameOver()
 	{
 		return !board.moreMoves();
 	}
 	
-	//maybe don't have a getBoard
+
 	public GameBoard getBoard()
 	{
 		return board;
