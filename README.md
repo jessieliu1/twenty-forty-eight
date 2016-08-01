@@ -21,7 +21,7 @@ Ignore the [], they're just there to keep things separated. Replace *.java if yo
 3. Get the Java Development Kit with `sudo apt-get install default-jdk`
 
 
-
+-----
 
 ### Game Code
 The code that recreates the game is structured as such: Each Game has a GameBoard, a GamePlayer, and a score. A GameBoard is composed of NumberTiles (a GameBoard's core is a two-dimensional array of NumberTiles.)
