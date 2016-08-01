@@ -397,6 +397,7 @@ public class GameBoard
 		//swipe actually changed anything
 		if (boardChanged)
 		{
+			//90% chance of inserting a 2, 10% of inserting a 4.
 			String location = Math.random() < .9 ? insertTwo(): insertFour();
 			String swipe = "R";
 			Move r = new Move(location, swipe, scoreAdd);
