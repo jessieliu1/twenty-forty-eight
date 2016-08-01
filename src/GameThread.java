@@ -27,7 +27,6 @@ public class GameThread extends Thread
     		if (in.readLine().equalsIgnoreCase("Y"))
     		{
 	    		Game g = new Game(player);
-	    		System.out.println("yes");
 //	    		@SuppressWarnings("unused")
 //				String inputLine;
 	    		
@@ -35,10 +34,9 @@ public class GameThread extends Thread
 	    		//TODO: set up to ask to play more games
 	    		
 //	    		while ((inputLine = in.readLine()) != null)
-//	    		System.out.println(Arrays.toString(g.getBoard().toString().split(":")));
+
 				out.println(g.getBoard().toString().replace("\n", ":"));
-				System.out.println("just printed first board");
-//				out.println("What move?");
+				System.out.println("Just printed first board");
 				while(!g.isGameOver())
 	    		{
 	    			try 
@@ -47,7 +45,6 @@ public class GameThread extends Thread
 	    				GameBoard gb = g.playNextMove(input.trim());
 	    				if (gb != null)
 	    				{
-	    					System.out.println(Arrays.toString(gb.toString().split("\n")));
 	    					out.println(gb.toString().replace("\n", ":"));
 	    				}
 	    				
@@ -57,7 +54,7 @@ public class GameThread extends Thread
 						e.printStackTrace();
 					}
 	    		}
-				out.println("Game Over! Score was: " + g.getScore());
+				out.println("Game Over! Score was " + g.getScore());
     		}
 
 		

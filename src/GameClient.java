@@ -32,7 +32,7 @@ public class GameClient
             
             BufferedReader stdIn =
                     new BufferedReader(new InputStreamReader(System.in));
-
+            RandomThinker rt = new RandomThinker();
             
             //start communication
             String gameUpdate;
@@ -45,16 +45,16 @@ public class GameClient
             	{
             		System.out.println("Server:\n" + readBoard(gameUpdate).toString()
             				.replace(":", "\n"));
+            		userInput = rt.nextMove(readBoard(gameUpdate));
             	}	
             	else
             	{
             		System.out.println("Server:\n" + gameUpdate);
+            		userInput = stdIn.readLine();
             		if (gameUpdate.equals("Bye!"))
             			break;
             	}
 
-                
-                userInput = stdIn.readLine();
                 
                 if (userInput != null) {
                     System.out.println("Client: " + userInput);
@@ -62,7 +62,7 @@ public class GameClient
                 }
             }
             
-            //TODO: MOVE THESE AFTER U REFACTOR! TO A NEW METHOD
+            //TODO: MOVE THESE TO A NEW METHOD
             out.close();
             in.close();
             stdIn.close();
@@ -93,12 +93,10 @@ public class GameClient
 	private GameBoard readBoard(String b)
 	{
 		String[] rows = b.split(":");
-//		System.out.println(Arrays.toString(rows));
 		NumberTile[][] bd = new NumberTile[rows.length][rows.length];
 		for (int i = 0; i < rows.length; i++)
 		{
 			String[] tileValues = rows[i].trim().split("\\s+");
-//			System.out.println(Arrays.toString(tileValues));
 			if (tileValues.length != rows.length)
 			{
 				throw new InvalidParameterException();

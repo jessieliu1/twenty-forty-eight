@@ -13,6 +13,7 @@ public class GameBoard
 	private int dimension;
 	//number of non empty tiles
 	private int numberOfTiles;
+	private boolean reached2048 = false;
 	
 	/**
 	 * Default game board dimensions are 4x4. Board always starts with two 
@@ -92,7 +93,7 @@ public class GameBoard
 	/**
 	 * Inserts a 2 number tile in a random empty spot on the board
 	 */
-	public void insertTwo()
+	public String insertTwo()
 	{
 		//if the board isn't full
 		if (this.isFull() == false)
@@ -109,10 +110,40 @@ public class GameBoard
 			//insert a 2 tile and increment number of tiles
 			board[firstDim][secondDim] = new NumberTile(2);
 			numberOfTiles++;
+			return "(" + firstDim + ", " + secondDim + ")";
 		}
 		
+		return null;
 		//if board is full do nothing
 	}
+	
+	/**
+	 * Inserts a 4 number tile in a random empty spot on the board
+	 */
+	public String insertFour()
+	{
+		//if the board isn't full
+		if (this.isFull() == false)
+		{
+			int firstDim = (int) (Math.random() * dimension);
+			int secondDim = (int) (Math.random() * dimension);
+			
+			while (board[firstDim][secondDim].isEmpty() == false)
+			{
+				firstDim = (int) (Math.random() * dimension);
+				secondDim = (int) (Math.random() * dimension);
+			}
+			
+			//insert a 4 tile and increment number of tiles
+			board[firstDim][secondDim] = new NumberTile(4);
+			numberOfTiles++;
+			return "(" + firstDim + ", " + secondDim + ")";
+		}
+		
+		return null;
+		//if board is full do nothing
+	}
+	
 	
 	/**
 	 * Checks if the board is full
@@ -195,7 +226,7 @@ public class GameBoard
 	 * Swipes left, collapsing appropriate tiles. Adds a new 2 tile.
 	 * @return the addition to the score after the swipe
 	 */
-	public int swipeLeft()
+	public Move swipeLeft()
 	{
 		int scoreAdd = 0;
 		boolean boardChanged = false;
@@ -210,6 +241,8 @@ public class GameBoard
 				//to its right if it exists.
 				if (board[row][last].isEmpty())
 				{
+					
+					//looking for the next non empty tile
 					while (curr < dimension && board[row][curr].isEmpty())
 					{
 						curr++;
@@ -220,7 +253,6 @@ public class GameBoard
 						board[row][last] = 
 								new NumberTile(board[row][curr].getValue());
 						board[row][curr].setValue(0);
-						
 						boardChanged = true;
 						curr++;
 					}
@@ -244,9 +276,17 @@ public class GameBoard
 						{
 							board[row][last]
 									.setValue(2 * board[row][last].getValue());
+							
 							//add the value of merged tile to the score addition
 							scoreAdd += board[row][last].getValue();
 							board[row][curr].setValue(0);
+							
+							//check if you got 2048
+							check2048(board[row][last]);
+							
+							
+							
+							
 							//since tiles were merged number of tiles decrements
 							numberOfTiles--;
 							last++;
@@ -271,16 +311,21 @@ public class GameBoard
 		//swipe actually changed anything
 		if (boardChanged)
 		{
-			insertTwo();
+			String location = Math.random() < .9 ? insertTwo(): insertFour();
+			String swipe = "L";
+			Move l = new Move(location, swipe, scoreAdd);
+			return l;
 		}
-		return scoreAdd;
+		
+		//if nothing has changed
+		return new Move("", "L", 0);
 	}
 	
 	/**
 	 * Swipes right, collapsing appropriate tiles. Adds a new 2 tile.
 	 * @return the addition to the score after the swipe
 	 */
-	public int swipeRight()
+	public Move swipeRight()
 	{
 		int scoreAdd = 0;
 		boolean boardChanged = false;
@@ -323,7 +368,11 @@ public class GameBoard
 							board[row][last]
 									.setValue(2 * board[row][last].getValue());
 							scoreAdd += board[row][last].getValue();
+							
 							board[row][curr].setValue(0);
+							
+							//check if you got 2048
+							check2048(board[row][last]);
 							
 							numberOfTiles--;
 							boardChanged = true;
@@ -343,18 +392,26 @@ public class GameBoard
 				}		
 			}
 		}
+		
+		//after every swipe, insert a random tile only if the 
+		//swipe actually changed anything
 		if (boardChanged)
 		{
-			insertTwo();
+			String location = Math.random() < .9 ? insertTwo(): insertFour();
+			String swipe = "R";
+			Move r = new Move(location, swipe, scoreAdd);
+			return r;
 		}
-		return scoreAdd;
+		
+		//if nothing has changed
+		return new Move("", "R", 0);
 	}
 	
 	/**
 	 * Swipes down, collapsing appropriate tiles. Adds a new 2 tile.
 	 * @return the addition to the score after the swipe
 	 */
-	public int swipeDown()
+	public Move swipeDown()
 	{
 		int scoreAdd = 0;
 		boolean boardChanged = false;
@@ -399,6 +456,9 @@ public class GameBoard
 							scoreAdd += board[last][col].getValue();
 							board[curr][col].setValue(0);
 							
+							//check if you got 2048
+							check2048(board[last][col]);
+							
 							numberOfTiles--;
 							boardChanged = true;
 							
@@ -417,18 +477,26 @@ public class GameBoard
 				}		
 			}
 		}
+		
+		//after every swipe, insert a random tile only if the 
+		//swipe actually changed anything
 		if (boardChanged)
 		{
-			insertTwo();
+			String location = Math.random() < .9 ? insertTwo(): insertFour();
+			String swipe = "D";
+			Move d = new Move(location, swipe, scoreAdd);
+			return d;
 		}
-		return scoreAdd;
+		
+		//if nothing has changed
+		return new Move("", "D", 0);
 	}
 	
 	/**
 	 * Swipes up, collapsing appropriate tiles. Adds a new 2 tile.
 	 * @return the addition to the score after the swipe
 	 */
-	public int swipeUp()
+	public Move swipeUp()
 	{
 		int scoreAdd = 0;
 		boolean boardChanged = false; 
@@ -474,6 +542,9 @@ public class GameBoard
 							scoreAdd += board[last][col].getValue();
 							board[curr][col].setValue(0);
 
+							//check if you got 2048
+							check2048(board[last][col]);
+							
 							numberOfTiles--;
 							boardChanged = true;
 							
@@ -492,11 +563,18 @@ public class GameBoard
 				}		
 			}
 		}
+		//after every swipe, insert a random tile only if the 
+		//swipe actually changed anything
 		if (boardChanged)
 		{
-			insertTwo();
+			String location = Math.random() < .9 ? insertTwo(): insertFour();
+			String swipe = "U";
+			Move u = new Move(location, swipe, scoreAdd);
+			return u;
 		}
-		return scoreAdd;
+		
+		//if nothing has changed
+		return new Move("", "U", 0);
 	}
 	
 	/**
@@ -506,5 +584,13 @@ public class GameBoard
 	public int getDimension()
 	{
 		return dimension;
+	}
+	
+	private void check2048(NumberTile n)
+	{
+		if (n.getValue() == 2048)
+		{
+			reached2048 = true;
+		}
 	}
 }

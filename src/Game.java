@@ -47,19 +47,19 @@ public class Game
 		{
 			if (nextMove.toUpperCase().equals("L"))
 			{
-				score += board.swipeLeft();
+				score += board.swipeLeft().getScoreAdd();
 			}
 			else if (nextMove.toUpperCase().equals("R"))
 			{
-				score += board.swipeRight();
+				score += board.swipeRight().getScoreAdd();
 			}
 			else if (nextMove.toUpperCase().equals("U"))
 			{
-				score += board.swipeUp();
+				score += board.swipeUp().getScoreAdd();
 			}
 			else if (nextMove.toUpperCase().equals("D"))
 			{
-				score += board.swipeDown();
+				score += board.swipeDown().getScoreAdd();
 			}
 			else 
 			{

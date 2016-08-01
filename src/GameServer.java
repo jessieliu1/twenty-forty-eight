@@ -18,7 +18,7 @@ public class GameServer
 			server = new ServerSocket(port, 10);
 			while (true)
 			{
-				System.out.println("test");				
+				System.out.println("Server Listening");				
 				Socket connection = server.accept();
 				//THOUGHTS: make a new player every time 
 				//if a player's thinker needs to learn put in a point where 
