@@ -16,18 +16,17 @@ Ignore the [ ], they're just there to keep things separate. Replace *.java if yo
 
 #### Java set up
 1. Update the package with `sudo apt-get update`.
-2. Check if java is already installed (it shouldn't be) with `java -version`
+2. Check if java is already installed with `java -version`
 3. Get the Java Development Kit with `sudo apt-get install default-jdk`
 
 -----
 
 ## Game Code Overview
-The code that recreates the game is structured as such: Each Game has a GameBoard, a GamePlayer, and a score. A GameBoard is composed of NumberTiles (a GameBoard's core is a two-dimensional array of NumberTiles.) A GameBoard has methods for swiping left, right, up and down, and can also be constructed to have a custom square dimension (it defaults to being a 4x4 board.) NumberTiles can have a value or can also be empty (have a value of 0.) The string version of an empty tile is "-" to not clutter the board. "Empty" GameBoards should be filled with NumberTiles of value 0.
+The code that recreates the game is structured as such: Each Game has a GameBoard, a GamePlayer, and a score. A GameBoard is composed of NumberTiles (a GameBoard's core is a two-dimensional array of NumberTiles.) A GameBoard has methods for swiping left, right, up and down, and can also be constructed to have a custom square dimension (it defaults to being a 4x4 board.) NumberTiles can have a value or can also be empty (have a value of 0.) The string version of an empty tile is "-" to not clutter the board when printing to the console. "Empty" GameBoards should be filled with NumberTiles of value 0.
 
 The game advances when `playNextMove(String move)` is called on a Game object, which takes in a move and throws an exception if the move isn't L, R, U, or D. This method alters the game's Board, updates the score, and returns the updated board.  
 
 Thinker is an interface with one method: `nextMove(GameBoard gb)`. Classes that implement this interface are intended to find the next move, given a board. An example is `RandomThinker` which chooses the next move randomly. In other Thinkers other methods could be added to help make smarter choices for the next move.
 
-The Client/Server set up is inspired by the Oracle Java Tutorial for a multithreaded server: (https://docs.oracle.com/javase/tutorial/networking/sockets/clientServer.html). 
 
 
