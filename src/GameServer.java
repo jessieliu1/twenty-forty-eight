@@ -1,10 +1,19 @@
 import java.io.*;
 import java.net.*;
+/**
+ * Represents a server for the game 2048
+ * @author Jessie Liu
+ *
+ */
 public class GameServer 
 {
 	private ServerSocket server;
 	private int port;
 	
+	/**
+	 * Creates a server listening on a given port
+	 * @param portNum the port to listen on
+	 */
 	public GameServer(int portNum)
 	{
 		port = portNum;
@@ -14,19 +23,19 @@ public class GameServer
 	{
 		try 
 		{
-			//backlog is set at 10 arbitrarily, change if you want
-			server = new ServerSocket(port, 10);
+			int counter = 1;
+			
+			//backlog is the maximum queue length for incoming connection indications 
+			//hard coded, change to fit needs
+			server = new ServerSocket(port, 100);
 			while (true)
 			{
 				System.out.println("Server Listening");				
 				Socket connection = server.accept();
-				//THOUGHTS: make a new player every time 
-				//if a player's thinker needs to learn put in a point where 
-				//games can be played many times
 //				GamePlayer play = 
 //						new GamePlayer(connection.getInetAddress().getHostName());
 				new GameThread(connection, 
-						new GamePlayer(connection.getInetAddress().getHostName())).start();
+						new GamePlayer("Client_" + Integer.toString(counter++))).start();
 			}
 		}
 		catch(IOException io)

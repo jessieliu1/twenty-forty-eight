@@ -27,22 +27,27 @@ public class GameThread extends Thread
     		if (in.readLine().equalsIgnoreCase("Y"))
     		{
 	    		Game g = new Game(player);
-//	    		@SuppressWarnings("unused")
-//				String inputLine;
-	    		
 	    		//while the game isn't over and there is still non null input
 	    		//TODO: set up to ask to play more games
 	    		
-//	    		while ((inputLine = in.readLine()) != null)
 
 				out.println(g.getBoard().toString().replace("\n", ":"));
 				System.out.println("Just printed first board");
+				
+
 				while(!g.isGameOver())
 	    		{
 	    			try 
 	    			{
 	    				String input = in.readLine();
+	    				System.out.println(player.getName() + ": " + input);
 	    				GameBoard gb = g.playNextMove(input.trim());
+	    				try {
+	    					Thread.sleep(12000);
+	    				} catch (InterruptedException e1) 
+	    				{
+	    					e1.printStackTrace();
+	    				}
 	    				if (gb != null)
 	    				{
 	    					out.println(gb.toString().replace("\n", ":"));
