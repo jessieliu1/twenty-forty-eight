@@ -30,9 +30,12 @@ public class GameClient
             BufferedReader in = new BufferedReader(
                 new InputStreamReader(socket.getInputStream()));
             
+            //set up system input reader
             BufferedReader stdIn =
                     new BufferedReader(new InputStreamReader(System.in));
-
+            
+            /*****************CHANGE THINKER AS NEEDED********************/
+            RandomThinker think = new RandomThinker();
             
             //start communication
             String gameUpdate;
@@ -40,21 +43,24 @@ public class GameClient
             
             while ((gameUpdate = in.readLine()) != null) 
             {
-            	//if the update is a board
-            	if (gameUpdate.contains(":"))
+            	//if the update is a board, use your thinker to get next move
+            	if (gameUpdate.contains(";"))
             	{
             		System.out.println("Server:\n" + readBoard(gameUpdate).toString()
-            				.replace(":", "\n"));
+            				.replace(";", "\n"));
+            		userInput = think.nextMove(readBoard(gameUpdate));
             	}	
+            	
+            	//if server sends something that isn't a board, take user input to
+            	//respond
             	else
             	{
             		System.out.println("Server:\n" + gameUpdate);
+            		userInput = stdIn.readLine();
             		if (gameUpdate.equals("Bye!"))
             			break;
             	}
 
-                
-                userInput = stdIn.readLine();
                 
                 if (userInput != null) {
                     System.out.println("Client: " + userInput);
@@ -62,7 +68,6 @@ public class GameClient
                 }
             }
             
-            //TODO: MOVE THESE AFTER U REFACTOR! TO A NEW METHOD
             out.close();
             in.close();
             stdIn.close();
@@ -92,13 +97,11 @@ public class GameClient
 	 */
 	private GameBoard readBoard(String b)
 	{
-		String[] rows = b.split(":");
-//		System.out.println(Arrays.toString(rows));
+		String[] rows = b.split(";");
 		NumberTile[][] bd = new NumberTile[rows.length][rows.length];
 		for (int i = 0; i < rows.length; i++)
 		{
 			String[] tileValues = rows[i].trim().split("\\s+");
-//			System.out.println(Arrays.toString(tileValues));
 			if (tileValues.length != rows.length)
 			{
 				throw new InvalidParameterException();
