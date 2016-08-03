@@ -26,15 +26,16 @@ public class GameThread extends Thread
     		out.println("Hello " + player.getName() + ", would you like to play? (Y/N)");
     		if (in.readLine().equalsIgnoreCase("Y"))
     		{
+    			out.println("Please enter your NetID: ");
+    			player.setName(in.readLine().trim());
 	    		Game g = new Game(player);
-	    		//while the game isn't over and there is still non null input
 	    		//TODO: set up to ask to play more games
 	    		
-
-				out.println(g.getBoard().toString().replace("\n", ":"));
-				System.out.println("Just printed first board");
-				
-
+	    		//replace the line breaks with ":" because client only reads
+	    		//in one line at a time
+				out.println(g.getBoard().toString().replace("\n", ";"));
+				System.out.println("Sent first board");
+		
 				while(!g.isGameOver())
 	    		{
 	    			try 
@@ -42,15 +43,15 @@ public class GameThread extends Thread
 	    				String input = in.readLine();
 	    				System.out.println(player.getName() + ": " + input);
 	    				GameBoard gb = g.playNextMove(input.trim());
-	    				try {
-	    					Thread.sleep(12000);
-	    				} catch (InterruptedException e1) 
-	    				{
-	    					e1.printStackTrace();
-	    				}
+//	    				try {
+//	    					Thread.sleep(12000);
+//	    				} catch (InterruptedException e1) 
+//	    				{
+//	    					e1.printStackTrace();
+//	    				}
 	    				if (gb != null)
 	    				{
-	    					out.println(gb.toString().replace("\n", ":"));
+	    					out.println(gb.toString().replace("\n", ";"));
 	    				}
 	    				
 					} 

@@ -33,7 +33,7 @@ public class GameServer
 				System.out.println("Server Listening");				
 				Socket connection = server.accept();
 //				GamePlayer play = 
-//						new GamePlayer(connection.getInetAddress().getHostName());
+//						new GamePlayer(a);
 				new GameThread(connection, 
 						new GamePlayer("Client_" + Integer.toString(counter++))).start();
 			}
