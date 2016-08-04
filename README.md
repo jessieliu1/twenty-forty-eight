@@ -49,7 +49,8 @@ Has one method: `startRunning()`. Creates a new ServerSocket listening on a spec
 ###GameThread
 Threads do the actual playing of the game with client. A `Game` is created. After requesting the information like a NetID, the board is sent as a String to the client. Note: The String version of the board is different from just the `toString()` method of `GameBoard` - the Client only reads one line of input at a time, so instead of line breaks after each row, the "\n" character is replaced with a semicolon. No non-board messages can contain a semicolon. The `GameThread` interprets client input of moves by playing the move on the board and sending it back.
 
-
+##MySQL
+https://www.digitalocean.com/community/tutorials/how-to-install-mysql-on-ubuntu-14-04
 
 
 
