@@ -1,43 +1,13 @@
 import java.security.InvalidParameterException;
+import java.sql.SQLException;
 import java.util.Arrays;
 
 public class Messing 
 {
-	public static void main(String args[])
+	public static void main(String args[]) throws SQLException
 	{
-		NumberTile[][] bloop = new NumberTile[4][4];
-		for (int i = 0; i < bloop.length; i++)
-		{
-			for (int j = 0; j < bloop[0].length; j++)
-			{
-				bloop[i][j] = new NumberTile();
-			}
-		}
-		bloop[2][2] = new NumberTile(2048);
-		
-		GameBoard gb = new GameBoard(bloop);
-		String sgb = gb.toString();
-		GameBoard gb2 = readBoard(sgb);
-		System.out.println(Arrays.deepToString(gb.toString().split(":"))
-				.replaceAll(",", "\n"));
-		System.out.println(Arrays.deepToString(gb2.toString().split(":"))
-				.replaceAll(",", "\n"));
-		
-//		System.out.println(Arrays.toString(gb.toString().split(":")));
-//		System.out.println(Arrays.deepToString(gb.toString().split(":"))
-//				.replaceAll(",", "\n"));
-		
-		
-		
-		
-		
-		
-		
-		
-//		String p = "h     ho";
-//		String[] p2 = p.split("\\s+");
-//		System.out.println(Arrays.toString(p2));
-
+		GameDBAccess ndb = new GameDBAccess("events", "potluck");
+		ndb.populateTable();
 		
 	}
 	
