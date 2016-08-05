@@ -6,5 +6,7 @@ public class ClientTester
 		//parameters are the IP address and the port number
 		GameClient gc = new GameClient("Jessies-Macbook-Pro.local",6174);
 		gc.startRunning();
+		GameClient gc2 = new GameClient("Jessies-Macbook-Pro.local",6174);
+		gc2.startRunning();
 	}
 }

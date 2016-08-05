@@ -57,7 +57,7 @@ public class GameClient
             	{
             		System.out.println("Server:\n" + gameUpdate);
             		userInput = stdIn.readLine();
-            		if (gameUpdate.equals("Bye!"))
+            		if (gameUpdate.contains("Game Over!"))
             			break;
             	}
 
@@ -68,12 +68,13 @@ public class GameClient
                 }
             }
             
-            out.close();
-            in.close();
-            stdIn.close();
-            
+//            out.close();
+//            in.close();
+//            stdIn.close(); 
 			
 		}
+		
+		
 		catch(UnknownHostException e)
 		{
 			System.err.println("Don't know about host " + hostName);

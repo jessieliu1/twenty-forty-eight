@@ -1,5 +1,4 @@
 import java.net.*;
-import java.util.Arrays;
 import java.io.*;
 
 public class GameThread extends Thread
@@ -34,6 +33,7 @@ public class GameThread extends Thread
 	    		//replace the line breaks with ":" because client only reads
 	    		//in one line at a time
 				out.println(g.getBoard().toString().replace("\n", ";"));
+				
 				System.out.println("Sent first board");
 		
 				while(!g.isGameOver())
@@ -66,11 +66,16 @@ public class GameThread extends Thread
 		
 			//move break if you wanna play more games
 
-    		in.close();
-    		out.close();
-    		socket.close();
+//    		in.close();
+//    		out.close();
+//    		socket.close();
     	}
- 
+    	//when the client exits, a NullPointerException will be thrown
+    	//when this happens, stop the thread.
+    	catch (NullPointerException np)
+    	{
+    		this.interrupt();
+    	}
     	catch (IOException e) 
     	{
             e.printStackTrace();
