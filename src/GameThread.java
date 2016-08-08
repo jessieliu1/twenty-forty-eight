@@ -59,12 +59,14 @@ public class GameThread extends Thread
 		    					if (gb.moreMoves())
 		    					{
 		    						out.println(gb.toString().replace("\n", ";"));
+		    						out.flush();
 		    					}
 		    					else 
 		    					{
 		    						
 		    						out.println(gb.toString().replace("\n", ";") 
 		    								+ ";Game Over! Score was " + g.getScore());
+		    						out.flush();
 		    					}
 		    				}
 		    				

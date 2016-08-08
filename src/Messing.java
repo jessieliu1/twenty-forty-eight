@@ -7,7 +7,7 @@ public class Messing
 	public static void main(String args[]) throws SQLException
 	{
 		GameDBAccess ndb = new GameDBAccess("tester", "potluck");
-		ndb.populateTable();
+		
 		
 	}
 	

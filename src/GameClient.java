@@ -58,6 +58,7 @@ public class GameClient
             //start communication
             String gameUpdate;
             String userInput = null;
+            int counter = 1; 
             
             try {
 				while ((gameUpdate = in.readLine()) != null) 
@@ -68,9 +69,17 @@ public class GameClient
 						try
 						{
 							GameBoard gb = readBoard(gameUpdate);
+							
+							//workaround for sending the board as one line
 							System.out.println("Server:\n" + gb.toString()
 							.replace(";", "\n"));
-							userInput = t.nextMove(gb);
+							if (gb.moreMoves())
+							{
+								userInput = t.nextMove(gb);
+								System.out.println("Client: " + userInput);
+								out.println(userInput);
+						        out.flush();
+							}
 						}
 						catch(InvalidParameterException e)
 						{
@@ -78,26 +87,21 @@ public class GameClient
 									.replace(";", "\n"));
 						}
 					}	
-					
-//					else if (gameUpdate.contains("Game Over!"))
-//					{
-//						userInput = null;
-//					}
-//					
+			
 					//if server sends something that isn't a board, take user input to
 					//respond
 					else
 					{
 						System.out.println("Server:\n" + gameUpdate);
-						userInput = stdIn.readLine();
 						if (gameUpdate.contains("Bye!"))
 							break;
+						userInput = stdIn.readLine();
+						System.out.println("Client: " + userInput);
+				        out.println(userInput);
+				        out.flush();
+						
 					}
 				    
-				    if (userInput != null) {
-				        System.out.println("Client: " + userInput);
-				        out.println(userInput);
-				    }
 				}
 			} catch (IOException e) {
 				System.err.println("Couldn't get I/O for the connection to " +
@@ -106,7 +110,7 @@ public class GameClient
 			}
             
 
-//			this.closeReaders();
+			this.closeReaders();
 		}
 
 	

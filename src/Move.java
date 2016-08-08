@@ -1,5 +1,5 @@
 /**
- * Store information for each movet
+ * Store information for each move
  * @author Jessie Liu
  *
  */
