@@ -1,18 +1,25 @@
 import java.net.*;
+import java.sql.SQLException;
 import java.io.*;
 
 public class GameThread extends Thread
 {
     private Socket socket = null;
-    private GamePlayer player;
+//    private GamePlayer player;
+    private String netID = "";
+    private GameDBAccess access = new GameDBAccess("tester", "game_stats");
+    private int threadNumber;
 
     //can add name to thread? Maybe? for debugging purposes.
     //call super("name"); at the start of the constructor
-    public GameThread(Socket s, GamePlayer gp)
+    public GameThread(Socket s, int number)
     {
     	this.socket = s;
-    	this.player = gp;
+//    	this.player = new GamePlayer(s.getLocalAddress().getHostName());
+    	threadNumber = number;
+    	
     }
+    
  
     public void run()
     {
@@ -22,17 +29,18 @@ public class GameThread extends Thread
             							new InputStreamReader(
             									socket.getInputStream()));) 
     	{
-    		out.println("Hello " + player.getName() + ", would you like to play? (Y/N)");
+    		out.println("Hello, would you like to play? (Y/N)");
     		if (in.readLine().equalsIgnoreCase("Y"))
     		{
     			out.println("How many games? Please enter a number between 1 and 100");
     			int numberOfGames = Integer.parseInt(in.readLine());
     			out.println("Please enter your NetID: ");
-    			player.setName(in.readLine().trim());
+//    			player.setName(in.readLine().trim());
+    			netID = in.readLine().trim();
     			
     			for (int i = 0; i < numberOfGames; i++)
     			{
-		    		Game g = new Game(player);
+		    		Game g = new Game(threadNumber + "." + i);
 	
 		    		
 		    		//replace the line breaks with ";" because client only reads
@@ -46,14 +54,30 @@ public class GameThread extends Thread
 		    			try 
 		    			{
 		    				String input = in.readLine();
-		    				System.out.println(player.getName() + ": " + input);
+		    				System.out.println(netID + ": " + input);
 		    				GameBoard gb = g.playNextMove(input.trim());
-	//	    				try {
-	//	    					Thread.sleep(12000);
-	//	    				} catch (InterruptedException e1) 
-	//	    				{
-	//	    					e1.printStackTrace();
-	//	    				}
+		    				
+		    				//store move in table
+		    				Move lastMove = g.getLastMove();
+		    				try 
+		    				{
+		    					if (lastMove.getMoveNumber() != -1)
+		    					{
+		    						access.populateGameTable(g.getID(), netID, lastMove);
+		    					}
+							} 
+		    				catch (SQLException e) 
+		    				{
+								e.printStackTrace();
+							}
+		    				
+		    				
+		    				try {
+		    					Thread.sleep(10000);
+		    				} catch (InterruptedException e1) 
+		    				{
+		    					e1.printStackTrace();
+		    				}
 		    				if (gb != null)
 		    				{
 		    					if (gb.moreMoves())
@@ -79,8 +103,6 @@ public class GameThread extends Thread
 	    		}
     		}
     		out.println("Bye!");
-		
-			//move break if you wanna play more games
 
     		in.close();
     		out.close();
