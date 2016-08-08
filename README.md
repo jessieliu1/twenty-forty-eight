@@ -25,6 +25,13 @@ Ignore the [ ], they're just there to keep things separate. Replace *.java if yo
 ## Game Code Overview
 `ServerTester` has a main method that creates a `GameServer` listening on specific port (currently 6174), and starts the server. Run `ServerTester` from the web instance. `ClientTester` has a main method that creates a `GameClient`, with parameters for the Public IP of the server (specified on the AWS instance) and the port to connect to (the same one that the game server is listening on.) Students should run `ClientTester` to connect to the server and play the game.
 
+After connected to the server, this message should be printed to the console:
+>Connection Established! Connected to: host-name
+
+>Server:
+
+>Hello Client_1, would you like to play? (Y/N)
+
 ###NumberTile
 `NumberTiles` can have a value or can also be empty (have a value of 0.) The string version of an empty tile is "-" to not clutter the board when printing to the console. "Empty" `GameBoards` should be filled with NumberTiles of value 0.
 
@@ -50,7 +57,11 @@ Has one method: `startRunning()`. Creates a new ServerSocket listening on a spec
 Threads do the actual playing of the game with client. A `Game` is created. After requesting the information like a NetID, the board is sent as a String to the client. Note: The String version of the board is different from just the `toString()` method of `GameBoard` - the Client only reads one line of input at a time, so instead of line breaks after each row, the "\n" character is replaced with a semicolon. No non-board messages can contain a semicolon. The `GameThread` interprets client input of moves by playing the move on the board and sending it back.
 
 ##MySQL
-Digital Ocean has a helpful tutorial for installing mysql on Ubuntu: https://www.digitalocean.com/community/tutorials/how-to-install-mysql-on-ubuntu-14-04.
+Digital Ocean has some really great MySQL tutorials.
+
+For installing mysql on Ubuntu: https://www.digitalocean.com/community/tutorials/how-to-install-mysql-on-ubuntu-14-04.
+
+For creating users and granting permissions: https://www.digitalocean.com/community/tutorials/how-to-create-a-new-user-and-grant-permissions-in-mysql
 
 
 
