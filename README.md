@@ -66,7 +66,9 @@ For installing mysql on Ubuntu: https://www.digitalocean.com/community/tutorials
 
 For creating users and granting permissions: https://www.digitalocean.com/community/tutorials/how-to-create-a-new-user-and-grant-permissions-in-mysql
 
+###Database access
 
+The `GameThread` class accesses the database through a  `GameDBAccess` object which requires a specific database name and table name, though the database name is hardcoded into the URL needed to get access within the `GameDBAccess` constant fields. To change what database and table to write to, modify the constant fields within the `GameDBAccess` class and alter how the `GameDBAccess` object is constructed within the `GameThread` class (change the string name of the database/table). 
 
 
 
