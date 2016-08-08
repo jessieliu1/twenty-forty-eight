@@ -58,8 +58,7 @@ public class GameClient
             //start communication
             String gameUpdate;
             String userInput = null;
-            int counter = 1; 
-            
+
             try {
 				while ((gameUpdate = in.readLine()) != null) 
 				{

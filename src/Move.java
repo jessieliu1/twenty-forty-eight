@@ -5,15 +5,24 @@
  */
 public class Move 
 {
-	private String location;
+	private int moveNumber;
 	private String swipe;
+	private String location;
+	private int tileValue;
 	private int scoreAdd;
 	
-	public Move (String l, String s, int sA)
+	public Move (int num, String swipe, String location, int tile, int score)
 	{
-		location = l;
-		swipe = s;
-		scoreAdd = sA;
+		moveNumber = num;
+		this.swipe = swipe.toUpperCase();
+		this.location = location;
+		tileValue = tile;
+		scoreAdd = score;
+	}
+	
+	public int getMoveNumber()
+	{
+		return moveNumber;
 	}
 	
 	public String getLocation()
@@ -24,6 +33,11 @@ public class Move
 	public String getSwipe()
 	{
 		return swipe;
+	}
+	
+	public int getTileValue()
+	{
+		return tileValue;
 	}
 	
 	public int getScoreAdd()
