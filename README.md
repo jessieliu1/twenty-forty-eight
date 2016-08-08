@@ -70,5 +70,8 @@ For creating users and granting permissions: https://www.digitalocean.com/commun
 
 The `GameThread` class accesses the database through a  `GameDBAccess` object which requires a specific database name and table name, though the database name is hardcoded into the URL needed to get access within the `GameDBAccess` constant fields. The URL is in this format: `jdbc:<DBMS>://<HOSTNAME>:<PORT_NUMBER>/YOUR_DATABASE_NAME`. To change what database and table to write to, modify the constant fields within the `GameDBAccess` class and alter how the `GameDBAccess` object is constructed within the `GameThread` class (change the string name of the database/table). Same goes for changing the user/password - look into the constants in the `GameDBAccess` class.
 
+####Using an external jar: (ConnectorJ)
+http://stackoverflow.com/questions/8949413/how-to-run-java-program-in-terminal-with-external-library-jar
+Use option 2 of the top answer.
 
 
