@@ -73,8 +73,13 @@ The `GameThread` class accesses the database through a  `GameDBAccess` object wh
 `GameDBAccess` has an `insertStatement` variable which is used to insert new move entries into the database table. Essentially the `insertStatement` is a query with set slots that can be filled in, and then sent through MySQL. The question marks in `insertStatement = connect.prepareStatement("insert into " + db + "." + table + " values (?, ?, ?, ?, ?, ?, ?)");` represent the values needed to insert into the table. `populateGameTable()` is an example of how these values can be entered and sent. This is the Java tutorial on prepared statements: http://docs.oracle.com/javase/tutorial/jdbc/basics/prepared.html.
 
 
-####Using an external jar: (ConnectorJ)
-http://stackoverflow.com/questions/8949413/how-to-run-java-program-in-terminal-with-external-library-jar
+####Running a program from the terminal using an external .jar file: 
+Connecting to a MySQL database requires a JDBC driver which is not contained in the standard Java library. It (ConnectorJ) can be downloaded here: https://dev.mysql.com/downloads/connector/j/. 
+
+To add the .jar file contained in the .zip file to your classpath:
+
+1. In Eclipse: section 10 of http://theopentutorials.com/post/uncategorized/jdbc-mysql-connection-tutorial/#jdbcdrivereclipse
+2. In terminal: http://stackoverflow.com/questions/8949413/how-to-run-java-program-in-terminal-with-external-library-jar
 Use option 2 of the top answer.
 
 
