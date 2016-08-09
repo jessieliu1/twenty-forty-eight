@@ -72,12 +72,12 @@ public class GameThread extends Thread
 							}
 		    				
 		    				
-		    				try {
-		    					Thread.sleep(10000);
-		    				} catch (InterruptedException e1) 
-		    				{
-		    					e1.printStackTrace();
-		    				}
+//		    				try {
+//		    					Thread.sleep(10000);
+//		    				} catch (InterruptedException e1) 
+//		    				{
+//		    					e1.printStackTrace();
+//		    				}
 		    				if (gb != null)
 		    				{
 		    					if (gb.moreMoves())
