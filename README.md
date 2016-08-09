@@ -81,4 +81,12 @@ To add the .jar file contained in the .zip file to your classpath:
 2. In terminal: http://stackoverflow.com/questions/8949413/how-to-run-java-program-in-terminal-with-external-library-jar
 Use option 2 of the top answer.
 
+### Setting time limits
+
+http://winterbe.com/posts/2015/04/07/java8-concurrency-tutorial-thread-executor-examples/
+
+http://stackoverflow.com/questions/5715235/java-set-timeout-on-a-certain-block-of-code
+
+
+
 
