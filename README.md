@@ -70,6 +70,9 @@ For creating users and granting permissions: https://www.digitalocean.com/commun
 
 The `GameThread` class accesses the database through a  `GameDBAccess` object which requires a specific database name and table name, though the database name is hardcoded into the URL needed to get access within the `GameDBAccess` constant fields. The URL is in this format: `jdbc:<DBMS>://<HOSTNAME>:<PORT_NUMBER>/YOUR_DATABASE_NAME`. To change what database and table to write to, modify the constant fields within the `GameDBAccess` class and alter how the `GameDBAccess` object is constructed within the `GameThread` class (change the string name of the database/table). Same goes for changing the user/password - look into the constants in the `GameDBAccess` class.
 
+`GameDBAccess` has an `insertStatement` variable which is used to insert new move entries into the database table. Essentially the `insertStatement` is a query with set slots that can be filled in, and then sent through MySQL. The question marks in `insertStatement = connect.prepareStatement("insert into " + db + "." + table + " values (?, ?, ?, ?, ?, ?, ?)");` represent the values needed to insert into the table. `populateGameTable()` is an example of how these values can be entered and sent. This is the Java tutorial on prepared statements: http://docs.oracle.com/javase/tutorial/jdbc/basics/prepared.html.
+
+
 ####Using an external jar: (ConnectorJ)
 http://stackoverflow.com/questions/8949413/how-to-run-java-program-in-terminal-with-external-library-jar
 Use option 2 of the top answer.
