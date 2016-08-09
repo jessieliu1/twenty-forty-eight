@@ -1,5 +1,7 @@
 import java.io.*;
 import java.net.*;
+
+
 /**
  * Represents a server for the game 2048
  * @author Jessie Liu
@@ -34,6 +36,7 @@ public class GameServer
 				Socket connection = server.accept();
 //				GamePlayer play = 
 //						new GamePlayer(a);
+				
 				new GameThread(connection, counter++).start();
 			}
 		}

@@ -1,6 +1,13 @@
 import java.net.*;
 import java.sql.SQLException;
 import java.io.*;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 public class GameThread extends Thread
 {
@@ -9,6 +16,8 @@ public class GameThread extends Thread
     private String netID = "";
     private GameDBAccess access = new GameDBAccess("tester", "game_stats");
     private int threadNumber;
+    private PrintWriter out;
+    private BufferedReader in; 
 
     //can add name to thread? Maybe? for debugging purposes.
     //call super("name"); at the start of the constructor
@@ -17,6 +26,18 @@ public class GameThread extends Thread
     	this.socket = s;
 //    	this.player = new GamePlayer(s.getLocalAddress().getHostName());
     	threadNumber = number;
+    	try 
+    	{
+			out = new PrintWriter(socket.getOutputStream(), true);
+			in = new BufferedReader(
+					new InputStreamReader(
+							socket.getInputStream()));
+		} 
+    	catch (IOException e) 
+    	{
+			e.printStackTrace();
+		}
+        
     	
     }
     
@@ -24,10 +45,6 @@ public class GameThread extends Thread
     public void run()
     {
     	try
-    	(PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-            BufferedReader in = new BufferedReader(
-            							new InputStreamReader(
-            									socket.getInputStream()));) 
     	{
     		out.println("Hello, would you like to play? (Y/N)");
     		if (in.readLine().equalsIgnoreCase("Y"))
@@ -47,78 +64,133 @@ public class GameThread extends Thread
 		    		//in one line at a time
 					out.println(g.getBoard().toString().replace("\n", ";"));
 					
-					System.out.println("Sent first board");
-			
-					while(!g.isGameOver())
+					System.out.println("Sent first board to "+ netID);
+					boolean isCancelled = false;
+					while(!g.isGameOver() && !isCancelled)
 		    		{
-		    			try 
-		    			{
-		    				String input = in.readLine();
-		    				System.out.println(netID + ": " + input);
-		    				GameBoard gb = g.playNextMove(input.trim());
-		    				
-		    				//store move in table
-		    				Move lastMove = g.getLastMove();
-		    				try 
-		    				{
-		    					if (lastMove.getMoveNumber() != -1)
-		    					{
-		    						access.populateGameTable(g.getID(), netID, lastMove);
-		    					}
-							} 
-		    				catch (SQLException e) 
-		    				{
+						final Runnable playGame = new Thread()
+						{
+							@Override
+							public void run()
+							{
+				    			try 
+				    			{
+				    				String input = in.readLine();
+				    				System.out.println(netID + ": " + input);
+				    				GameBoard gb = g.playNextMove(input.trim());
+				    				
+				    				//store move in table
+				    				Move lastMove = g.getLastMove();
+				    				try 
+				    				{
+				    					if (lastMove.getMoveNumber() != -1)
+				    					{
+				    						access.populateGameTable(g.getID(), netID, lastMove);
+				    					}
+									} 
+				    				catch (SQLException e) 
+				    				{
+										e.printStackTrace();
+									}
+				    				
+				    				
+//				    				try {
+//				    					Thread.sleep(10000);
+//				    				} catch (InterruptedException e1) 
+//				    				{
+//				    					e1.printStackTrace();
+//				    				}
+				    				if (gb != null)
+				    				{
+				    					if (gb.moreMoves())
+				    					{
+				    						out.println(gb.toString().replace("\n", ";"));
+				    						out.flush();
+				    					}
+				    					else 
+				    					{
+				    						
+				    						out.println(gb.toString().replace("\n", ";") 
+				    								+ ";Game Over! Score was " + g.getScore());
+				    						out.flush();
+				    					}
+				    				}
+				    				
+									} 
+				    				catch (InvalidMoveException e) 
+				    				{
+				    					e.printStackTrace();
+				    				}
+					    			catch (IOException e) 
+					    			{
+					    				e.printStackTrace();
+					    			}
+				    			}
+			    			};
+			    			
+			    			final ExecutorService executor = Executors.newSingleThreadExecutor();
+			    			final Future<?> future = executor.submit(playGame);
+			    			executor.shutdown(); // This does not cancel the already-scheduled task.
+
+			    			try { 
+			    			  future.get(1 * numberOfGames, TimeUnit.MILLISECONDS); 
+			    			}
+			    			catch (InterruptedException ie) { 
+			    			  	ie.printStackTrace();
+			    			}
+
+			    			catch (TimeoutException te) { 
+			    				future.cancel(true);
+			    				isCancelled = true;
+			    				out.println("Timeout Exception");
+			    				te.printStackTrace();
+			    			} 
+			    			catch (ExecutionException e) {
 								e.printStackTrace();
 							}
-		    				
-		    				
-//		    				try {
-//		    					Thread.sleep(10000);
-//		    				} catch (InterruptedException e1) 
-//		    				{
-//		    					e1.printStackTrace();
-//		    				}
-		    				if (gb != null)
-		    				{
-		    					if (gb.moreMoves())
-		    					{
-		    						out.println(gb.toString().replace("\n", ";"));
-		    						out.flush();
-		    					}
-		    					else 
-		    					{
-		    						
-		    						out.println(gb.toString().replace("\n", ";") 
-		    								+ ";Game Over! Score was " + g.getScore());
-		    						out.flush();
-		    					}
-		    				}
-		    				
-						} 
-		    			catch (InvalidMoveException e) 
-		    			{
-							e.printStackTrace();
-						}
+			    			if (!executor.isTerminated())
+			    			    executor.shutdownNow();			
 		    		}
-	    		}
-    		}
-    		out.println("Bye!");
+		    		
 
-    		in.close();
-    		out.close();
-    		socket.close();
+		    		}
+    			
+    			out.println("Bye!");
+
+    			}
+//    		closeReaders();
     	}
-    	
     	//when the client exits, a NullPointerException will be thrown
     	//when this happens, stop the thread.
     	catch (NullPointerException np)
     	{
     		this.interrupt();
     	}
-    	catch (IOException e) 
-    	{
-            e.printStackTrace();
-        }
+		catch (IOException e) 
+		{
+			e.printStackTrace();
+		}
+
+
+	}
+						
+
+						
+
+    
+    private void closeReaders()
+    {
+		try 
+		{
+			in.close();
+			out.close();
+			socket.close();
+		} 
+		catch (IOException e) 
+		{
+			e.printStackTrace();
+		}
+		
     }
     
 
