@@ -66,7 +66,9 @@ For installing mysql on Ubuntu: https://www.digitalocean.com/community/tutorials
 For creating users and granting permissions: https://www.digitalocean.com/community/tutorials/how-to-create-a-new-user-and-grant-permissions-in-mysql
 
 How I created the game_stats table in the database:
-CREATE TABLE game_stats(game_id VARCHAR(10), net_id VARCHAR(10), move_number INT, swipe VARCHAR(1), location VARCHAR(8), tile_value INT, score_add INT);
+`CREATE TABLE game_stats(game_id VARCHAR(10), net_id VARCHAR(10), move_number INT, swipe VARCHAR(1), location VARCHAR(8), tile_value INT, score_add INT);`
+
+Try `DESCRIBE game_stats` to see if the table was created correctly.
 
 ###Database access
 
@@ -76,7 +78,7 @@ The `GameThread` class accesses the database through a  `GameDBAccess` object wh
 
 
 ####Running a program from the terminal using an external .jar file: 
-Connecting to a MySQL database requires a JDBC driver which is not contained in the standard Java library. It (ConnectorJ) can be downloaded here: https://dev.mysql.com/downloads/connector/j/. This driver class is used in the `GameDBAccess` class. At compile time, if the .jar file is not added to the classpath, you will get a `ClassNotFoundException` which is not fun.
+Connecting to a MySQL database requires a JDBC driver which is not contained in the standard Java library. It (ConnectorJ) can be downloaded here: https://dev.mysql.com/downloads/connector/j/. This driver class is used in the `GameDBAccess` class. At compile time, if the .jar file is not added to the classpath, you will get a `ClassNotFoundException` which is not fun. Upload the zip file for Connectorj downloaded from the mysql website to the server, where you will need to `sudo apt-get install unzip
 
 To add the .jar file contained in the .zip file to your classpath:
 
