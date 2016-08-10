@@ -6,7 +6,7 @@ This assignment is created for Prof. Selman's course and is based off of the gam
 Students will play the game by connecting to a server and running their own code, written to send the next move in the game to the server. The game code is written in Java and the server is hosted by AWS.
 
 ## Setting up the AWS EC2 instance
-Follow the steps here to create and connect to an instance. In this case, I'll be making an Ubuntu instance. Make sure to do the prerequisites (set up a key pair, and save it in a handy place): http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EC2_GetStarted.html. During set up, create a security rule with a custom TCP rule type, uses a TCP protocol, and that listens on the port specified in your Tester code (currently set up to be 6174, Kaprekar's constant!) Allow the source to be anywhere. This will allow people to actually connect to your server. It can take a bit to start up. 
+Follow the steps here to create and connect to an instance. In this case, I'll be making an Ubuntu instance. Make sure to do the prerequisites (set up a key pair, and save it in a handy place - you won't be able to connect to the instance without it): http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EC2_GetStarted.html. During set up, create a security rule with a custom TCP rule type, uses a TCP protocol, and that listens on the port specified in your Tester code (currently set up to be 6174, Kaprekar's constant!) Allow the source to be anywhere. This will allow people to actually connect to your server. It can take a bit to start up. 
 
 Once connected to the instance, make a directory to store your java files using `mkdir [name of directory]`. Upload files to the directory from a terminal window not connected to the server like so:
 
