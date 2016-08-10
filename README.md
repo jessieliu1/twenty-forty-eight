@@ -76,7 +76,7 @@ The `GameThread` class accesses the database through a  `GameDBAccess` object wh
 
 
 ####Running a program from the terminal using an external .jar file: 
-Connecting to a MySQL database requires a JDBC driver which is not contained in the standard Java library. It (ConnectorJ) can be downloaded here: https://dev.mysql.com/downloads/connector/j/. 
+Connecting to a MySQL database requires a JDBC driver which is not contained in the standard Java library. It (ConnectorJ) can be downloaded here: https://dev.mysql.com/downloads/connector/j/. This driver class is used in the `GameDBAccess` class. At compile time, if the .jar file is not added to the classpath, you will get a `ClassNotFoundException` which is not fun.
 
 To add the .jar file contained in the .zip file to your classpath:
 
