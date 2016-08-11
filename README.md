@@ -92,6 +92,7 @@ http://winterbe.com/posts/2015/04/07/java8-concurrency-tutorial-thread-executor-
 
 http://stackoverflow.com/questions/5715235/java-set-timeout-on-a-certain-block-of-code
 
+The combination of an ExecutorService Java object and a Future object are used to timeout of game session. 
 
 
 
