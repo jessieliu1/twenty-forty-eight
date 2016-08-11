@@ -74,16 +74,25 @@ public class GameClient
 							.replace(";", "\n"));
 							if (gb.moreMoves())
 							{
-								userInput = t.nextMove(gb);
-								System.out.println("Client: " + userInput);
+//								userInput = t.nextMove(gb);
+								userInput = stdIn.readLine();
+//								System.out.println("Client: " + userInput);
 								out.println(userInput);
-						        out.flush();
 							}
 						}
-						catch(InvalidParameterException e)
+						catch(Exception e)
 						{
 							System.out.println("Server:\n" + gameUpdate
 									.replace(";", "\n"));
+							
+							String message;
+							if ((message = stdIn.readLine()) != null)
+								{
+									out.print(message);
+//									in.reset();
+								}
+							
+							
 						}
 					}	
 			

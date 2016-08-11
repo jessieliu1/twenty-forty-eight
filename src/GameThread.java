@@ -100,19 +100,18 @@ public class GameThread extends Thread
 //				    				{
 //				    					e1.printStackTrace();
 //				    				}
+				    				
 				    				if (gb != null)
 				    				{
 				    					if (gb.moreMoves())
 				    					{
 				    						out.println(gb.toString().replace("\n", ";"));
-				    						out.flush();
 				    					}
 				    					else 
 				    					{
 				    						
 				    						out.println(gb.toString().replace("\n", ";") 
 				    								+ ";Game Over! Score was " + g.getScore());
-				    						out.flush();
 				    					}
 				    				}
 				    				
@@ -133,7 +132,7 @@ public class GameThread extends Thread
 			    			executor.shutdown(); // This does not cancel the already-scheduled task.
 
 			    			try { 
-			    			  future.get(1 * numberOfGames, TimeUnit.MILLISECONDS); 
+			    			  future.get(5, TimeUnit.SECONDS); 
 			    			}
 			    			catch (InterruptedException ie) { 
 			    			  	ie.printStackTrace();
@@ -142,11 +141,25 @@ public class GameThread extends Thread
 			    			catch (TimeoutException te) { 
 			    				future.cancel(true);
 			    				isCancelled = true;
-			    				out.println("Timeout Exception");
+			    				String message = "Timeout Exception";
 			    				te.printStackTrace();
+			    				if (i + 1 < numberOfGames)
+			    				{
+			    					out.println(message + "; Keep playing?");
+			    				}
+			    				
+			    				else{ out.println(message);}
+			    				
+			    				if (!in.readLine().equals("Y"))
+			    				{
+			    					isCancelled = true;
+			    					break;
+			    				}
+			    				
 			    			} 
 			    			catch (ExecutionException e) {
 								e.printStackTrace();
+								break;
 							}
 			    			if (!executor.isTerminated())
 			    			    executor.shutdownNow();			
@@ -159,6 +172,10 @@ public class GameThread extends Thread
 
     			}
 //    		closeReaders();
+    		else
+    		{
+    			out.println("Bye!");
+    		}
     	}
     	//when the client exits, a NullPointerException will be thrown
     	//when this happens, stop the thread.
