@@ -111,7 +111,8 @@ public class GameThread extends Thread
 				    					{
 				    						
 				    						out.println(gb.toString().replace("\n", ";") 
-				    								+ ";Game Over! Score was " + g.getScore());
+				    								+ ";Game Over! Score was " + g.getScore()
+				    								+ ";Press enter to continue");
 				    					}
 				    				}
 				    				
@@ -129,7 +130,7 @@ public class GameThread extends Thread
 			    			
 			    			final ExecutorService executor = Executors.newSingleThreadExecutor();
 			    			final Future<?> future = executor.submit(playGame);
-			    			executor.shutdown(); // This does not cancel the already-scheduled task.
+			    			executor.shutdown(); //restricts the executor from accepting more tasks.
 
 			    			try { 
 			    			  future.get(5, TimeUnit.SECONDS); 
@@ -140,21 +141,12 @@ public class GameThread extends Thread
 
 			    			catch (TimeoutException te) { 
 			    				future.cancel(true);
+			    				executor.shutdownNow();
 			    				isCancelled = true;
-			    				String message = "Timeout Exception";
+			    				String message = "Timeout Exception, press any key to keep playing";
+			    				out.println(message);
 			    				te.printStackTrace();
-			    				if (i + 1 < numberOfGames)
-			    				{
-			    					out.println(message + "; Keep playing?");
-			    				}
-			    				
-			    				else{ out.println(message);}
-			    				
-			    				if (!in.readLine().equals("Y"))
-			    				{
-			    					isCancelled = true;
-			    					break;
-			    				}
+			    				in.readLine();
 			    				
 			    			} 
 			    			catch (ExecutionException e) {
@@ -172,6 +164,8 @@ public class GameThread extends Thread
 
     			}
 //    		closeReaders();
+    		
+    		//If they choose to not play
     		else
     		{
     			out.println("Bye!");

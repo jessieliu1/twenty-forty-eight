@@ -69,14 +69,14 @@ public class GameClient
 						{
 							GameBoard gb = readBoard(gameUpdate);
 							
-							//workaround for sending the board as one line
+							//convert the one line to many
 							System.out.println("Server:\n" + gb.toString()
 							.replace(";", "\n"));
 							if (gb.moreMoves())
 							{
-//								userInput = t.nextMove(gb);
-								userInput = stdIn.readLine();
-//								System.out.println("Client: " + userInput);
+								userInput = t.nextMove(gb);
+//								userInput = stdIn.readLine();
+								System.out.println("Client: " + userInput);
 								out.println(userInput);
 							}
 						}
@@ -103,10 +103,22 @@ public class GameClient
 						System.out.println("Server:\n" + gameUpdate);
 						if (gameUpdate.contains("Bye!"))
 							break;
+						
+						//If the game update is a timeout message, read in the next line
+						//which is the last sent board before the timeout - annoying but 
+						//a necessary work around.
+						if (gameUpdate.contains("Timeout"))
+						{
+							in.readLine();
+						}
+						
+						//if the game is over, automatically start the next game
+						if (!gameUpdate.contains("Game Over!"))
+						{
 						userInput = stdIn.readLine();
 						System.out.println("Client: " + userInput);
 				        out.println(userInput);
-				        out.flush();
+						}
 						
 					}
 				    
