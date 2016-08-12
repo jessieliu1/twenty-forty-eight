@@ -85,13 +85,15 @@ public class GameClient
 							System.out.println("Server:\n" + gameUpdate
 									.replace(";", "\n"));
 							
-							String message;
-							if ((message = stdIn.readLine()) != null)
-								{
-									out.print(message);
-//									in.reset();
-								}
-							
+							if (!gameUpdate.contains("Game Over!"))
+							{
+								String message;
+								if ((message = stdIn.readLine()) != null)
+									{
+										out.print(message);
+	//									in.reset();
+									}
+							}
 							
 						}
 					}	
@@ -112,13 +114,9 @@ public class GameClient
 							in.readLine();
 						}
 						
-						//if the game is over, automatically start the next game
-						if (!gameUpdate.contains("Game Over!"))
-						{
 						userInput = stdIn.readLine();
 						System.out.println("Client: " + userInput);
 				        out.println(userInput);
-						}
 						
 					}
 				    

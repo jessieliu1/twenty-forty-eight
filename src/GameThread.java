@@ -111,8 +111,7 @@ public class GameThread extends Thread
 				    					{
 				    						
 				    						out.println(gb.toString().replace("\n", ";") 
-				    								+ ";Game Over! Score was " + g.getScore()
-				    								+ ";Press enter to continue");
+				    								+ ";Game Over! Score was " + g.getScore());
 				    					}
 				    				}
 				    				
