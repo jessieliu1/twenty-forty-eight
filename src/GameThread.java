@@ -49,16 +49,30 @@ public class GameThread extends Thread
     		out.println("Hello, would you like to play? (Y/N)");
     		if (in.readLine().equalsIgnoreCase("Y"))
     		{
-    			out.println("How many games? Please enter a number between 1 and 100");
-    			int numberOfGames = Integer.parseInt(in.readLine());
+    			boolean notNumber = true;
+    			int numberOfGames = 0;
+    			while(notNumber)
+    			{
+    				out.println("How many games? Please enter a number between 1 and 100");
+    				try
+    				{
+    					numberOfGames = Integer.parseInt(in.readLine());
+    					notNumber = false;
+    				}
+    				catch (NumberFormatException e)
+    				{
+    					
+    				}
+    			}
+    			
     			out.println("Please enter your NetID: ");
 //    			player.setName(in.readLine().trim());
     			netID = in.readLine().trim();
     			
+    			//for each game that the player wishes to play
     			for (int i = 0; i < numberOfGames; i++)
     			{
 		    		Game g = new Game(threadNumber + "." + i);
-	
 		    		
 		    		//replace the line breaks with ";" because client only reads
 		    		//in one line at a time
@@ -92,14 +106,6 @@ public class GameThread extends Thread
 				    				{
 										e.printStackTrace();
 									}
-				    				
-				    				
-//				    				try {
-//				    					Thread.sleep(10000);
-//				    				} catch (InterruptedException e1) 
-//				    				{
-//				    					e1.printStackTrace();
-//				    				}
 				    				
 				    				if (gb != null)
 				    				{
@@ -184,10 +190,6 @@ public class GameThread extends Thread
 
 	}
 						
-
-						
-
-    
     private void closeReaders()
     {
 		try 
