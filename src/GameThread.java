@@ -166,8 +166,10 @@ public class GameThread extends Thread
 								e.printStackTrace();
 								break;
 							}
+			    			
 			    			if (!executor.isTerminated())
 			    			    executor.shutdownNow();			
+
 		    		}
 		    		
 
