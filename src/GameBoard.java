@@ -31,7 +31,6 @@ public class GameBoard
 		numberOfTiles = 0;
 		numberOfMoves = 0;
 		
-		//inserts two 2 tiles
 		insertTwo();
 		insertTwo();
 	}
@@ -51,7 +50,6 @@ public class GameBoard
 		}
 		numberOfTiles = 0;
 		
-		//inserts two 2 tiles in random locations
 		insertTwo();
 		insertTwo();
 	}
@@ -97,7 +95,6 @@ public class GameBoard
 	 */
 	public String insertTwo()
 	{
-		//if the board isn't full
 		if (this.isFull() == false)
 		{
 			int firstDim = (int) (Math.random() * dimension);
@@ -124,7 +121,6 @@ public class GameBoard
 	 */
 	public String insertFour()
 	{
-		//if the board isn't full
 		if (this.isFull() == false)
 		{
 			int firstDim = (int) (Math.random() * dimension);
