@@ -29,7 +29,7 @@ After connected to the server, this message should be printed to the console:
 
 >Server:
 
->Hello Client_1, would you like to play? (Y/N)
+>Hello, would you like to play? (Y/N)
 
 ###NumberTile
 `NumberTiles` can have a value or can also be empty (have a value of 0.) The string version of an empty tile is "-" to not clutter the board when printing to the console. "Empty" `GameBoards` should be filled with NumberTiles of value 0.
