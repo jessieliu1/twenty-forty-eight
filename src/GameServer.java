@@ -1,5 +1,7 @@
 import java.io.*;
 import java.net.*;
+
+
 /**
  * Represents a server for the game 2048
  * @author Jessie Liu
@@ -32,10 +34,8 @@ public class GameServer
 			{
 				System.out.println("Server Listening");				
 				Socket connection = server.accept();
-//				GamePlayer play = 
-//						new GamePlayer(a);
-				new GameThread(connection, 
-						new GamePlayer("Client_" + Integer.toString(counter++))).start();
+				
+				new GameThread(connection, counter++, "tester", "game_stats2").start();
 			}
 		}
 		catch(IOException io)

@@ -1,24 +1,31 @@
 /**
- * Store information for each movet
+ * Store information for each move
  * @author Jessie Liu
  *
  */
 public class Move 
 {
-	private String location;
+	private int moveNumber;
+	private GameBoard board;
 	private String swipe;
 	private int scoreAdd;
 	
-	public Move (String l, String s, int sA)
+	public Move (int num, GameBoard gb, String swipe, int score)
 	{
-		location = l;
-		swipe = s;
-		scoreAdd = sA;
+		moveNumber = num;
+		board = gb;
+		this.swipe = swipe.toUpperCase();
+		scoreAdd = score;
 	}
 	
-	public String getLocation()
+	public int getMoveNumber()
 	{
-		return location;
+		return moveNumber;
+	}
+	
+	public GameBoard getBoard()
+	{
+		return board;
 	}
 	
 	public String getSwipe()

@@ -6,30 +6,30 @@
 public class Game 
 {
 	private GameBoard board;
-	private GamePlayer player;
+	private Move lastMove = null;
 	private int score;
+	private String ID;
 	
 	/**
 	 * Creates a game with the default 4x4 board
-	 * @param p the player of the game
+	 * @param id the game id 
 	 */
-	public Game(GamePlayer p)
+	public Game(String id)
 	{
 		board = new GameBoard();
-		this.player = p;
 		score = 0;
+		ID = id;
 	}
 	
 	/**
 	 * Creates a game with a board of a given dimension
-	 * @param p the player of the game
 	 * @param dimension the dimension of the board
 	 */
-	public Game(GamePlayer p, int dimension)
+	public Game(String id, int dimension)
 	{
 		board = new GameBoard(dimension);
-		this.player = p;
 		score = 0;
+		ID = id;
 	}
 	
 	/**
@@ -47,19 +47,23 @@ public class Game
 		{
 			if (nextMove.toUpperCase().equals("L"))
 			{
-				score += board.swipeLeft().getScoreAdd();
+				lastMove = board.swipeLeft();
+				score += lastMove.getScoreAdd();
 			}
 			else if (nextMove.toUpperCase().equals("R"))
 			{
-				score += board.swipeRight().getScoreAdd();
+				lastMove = board.swipeRight();
+				score += lastMove.getScoreAdd();
 			}
 			else if (nextMove.toUpperCase().equals("U"))
 			{
-				score += board.swipeUp().getScoreAdd();
+				lastMove = board.swipeUp();
+				score += lastMove.getScoreAdd();
 			}
 			else if (nextMove.toUpperCase().equals("D"))
 			{
-				score += board.swipeDown().getScoreAdd();
+				lastMove = board.swipeDown();
+				score += lastMove.getScoreAdd();
 			}
 			else 
 			{
@@ -72,22 +76,9 @@ public class Game
 		//otherwise, end the game and return a null board
 		else
 		{
-			this.gameOver();
 			return null;
 		}
-	}
-	
-	/**
-	 * Updates player info after a game ends
-	 */
-	public void gameOver()
-	{
-		if (isGameOver())
-		{
-			player.updateScore(score);
-			player.incrementGames();
-		}
-	}
+	}	
 	
 	/**
 	 * Returns if the game is over
@@ -97,10 +88,19 @@ public class Game
 		return !board.moreMoves();
 	}
 	
-
+	public Move getLastMove()
+	{
+		return lastMove;
+	}
+	
 	public GameBoard getBoard()
 	{
 		return board;
+	}
+	
+	public String getID()
+	{
+		return ID;
 	}
 	
 	public int getScore()
