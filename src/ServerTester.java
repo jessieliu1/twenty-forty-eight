@@ -7,6 +7,4 @@ public class ServerTester
 		testServer.startRunning();
 	}
 
-	
-
 }

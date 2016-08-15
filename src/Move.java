@@ -6,17 +6,15 @@
 public class Move 
 {
 	private int moveNumber;
+	private GameBoard board;
 	private String swipe;
-	private String location;
-	private int tileValue;
 	private int scoreAdd;
 	
-	public Move (int num, String swipe, String location, int tile, int score)
+	public Move (int num, GameBoard gb, String swipe, int score)
 	{
 		moveNumber = num;
+		board = gb;
 		this.swipe = swipe.toUpperCase();
-		this.location = location;
-		tileValue = tile;
 		scoreAdd = score;
 	}
 	
@@ -25,19 +23,14 @@ public class Move
 		return moveNumber;
 	}
 	
-	public String getLocation()
+	public GameBoard getBoard()
 	{
-		return location;
+		return board;
 	}
 	
 	public String getSwipe()
 	{
 		return swipe;
-	}
-	
-	public int getTileValue()
-	{
-		return tileValue;
 	}
 	
 	public int getScoreAdd()

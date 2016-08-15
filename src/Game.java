@@ -6,7 +6,6 @@
 public class Game 
 {
 	private GameBoard board;
-//	private GamePlayer player;
 	private Move lastMove = null;
 	private int score;
 	private String ID;
@@ -18,7 +17,6 @@ public class Game
 	public Game(String id)
 	{
 		board = new GameBoard();
-//		this.player = p;
 		score = 0;
 		ID = id;
 	}
@@ -30,7 +28,6 @@ public class Game
 	public Game(String id, int dimension)
 	{
 		board = new GameBoard(dimension);
-//		this.player = p;
 		score = 0;
 		ID = id;
 	}
@@ -79,23 +76,9 @@ public class Game
 		//otherwise, end the game and return a null board
 		else
 		{
-//			this.gameOver();
 			return null;
 		}
-	}
-	
-//	/**
-//	 * Updates player info after a game ends
-//	 */
-//	public void gameOver()
-//	{
-//		if (isGameOver())
-//		{
-//			player.updateScore(score);
-//			player.incrementGames();
-//		}
-//	}
-	
+	}	
 	
 	/**
 	 * Returns if the game is over

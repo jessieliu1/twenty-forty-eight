@@ -34,10 +34,8 @@ public class GameServer
 			{
 				System.out.println("Server Listening");				
 				Socket connection = server.accept();
-//				GamePlayer play = 
-//						new GamePlayer(a);
 				
-				new GameThread(connection, counter++).start();
+				new GameThread(connection, counter++, "tester", "game_stats2").start();
 			}
 		}
 		catch(IOException io)

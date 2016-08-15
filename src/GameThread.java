@@ -14,18 +14,18 @@ public class GameThread extends Thread
     private Socket socket = null;
 //    private GamePlayer player;
     private String netID = "";
-    private GameDBAccess access = new GameDBAccess("tester", "game_stats");
+    private GameDBAccess access;
     private int threadNumber;
     private PrintWriter out;
     private BufferedReader in; 
 
     //can add name to thread? Maybe? for debugging purposes.
     //call super("name"); at the start of the constructor
-    public GameThread(Socket s, int number)
+    public GameThread(Socket s, int number, String db, String table)
     {
     	this.socket = s;
-//    	this.player = new GamePlayer(s.getLocalAddress().getHostName());
     	threadNumber = number;
+    	access = new GameDBAccess(db, table);
     	try 
     	{
 			out = new PrintWriter(socket.getOutputStream(), true);
@@ -66,7 +66,6 @@ public class GameThread extends Thread
     			}
     			
     			out.println("Please enter your NetID: ");
-//    			player.setName(in.readLine().trim());
     			netID = in.readLine().trim();
     			
     			//for each game that the player wishes to play
@@ -79,6 +78,15 @@ public class GameThread extends Thread
 					out.println(g.getBoard().toString().replace("\n", ";"));
 					
 					System.out.println("Sent first board to "+ netID);
+					//put initial board in db
+					Move firstMove = new Move(0, g.getBoard(), "", 0);
+					try {
+						access.populateGameTable(g.getID(), netID, firstMove);
+					} catch (SQLException e1) {
+						e1.printStackTrace();
+					}
+					
+					
 					boolean isCancelled = false;
 					while(!g.isGameOver() && !isCancelled)
 		    		{

@@ -31,8 +31,8 @@ public class GameBoard
 		numberOfTiles = 0;
 		numberOfMoves = 0;
 		
-		insertTwo();
-		insertTwo();
+		String loc = Math.random() < .9 ? insertTwo() : insertFour();
+		String loc2 = Math.random() < .9 ? insertTwo() : insertFour();
 	}
 	
 	/**
@@ -50,8 +50,8 @@ public class GameBoard
 		}
 		numberOfTiles = 0;
 		
-		insertTwo();
-		insertTwo();
+		String loc = Math.random() < .9 ? insertTwo() : insertFour();
+		String loc2 = Math.random() < .9 ? insertTwo() : insertFour();
 	}
 	
 	/**
@@ -311,15 +311,14 @@ public class GameBoard
 		{
 			numberOfMoves++;
 			//90% chance of inserting a 2, 10% of inserting a 4
-			int tileValue = Math.random() < .9 ? 2: 4;
-			String location = (tileValue == 2) ? insertTwo(): insertFour();
+			String location = Math.random() < .9 ? insertTwo(): insertFour();
 			String swipe = "L";
-			Move l = new Move(numberOfMoves, swipe, location, tileValue, scoreAdd);
+			Move l = new Move(numberOfMoves, this, swipe, scoreAdd);
 			return l;
 		}
 		
 		//if nothing has changed
-		return new Move(-1, "L", "", 0, 0);
+		return new Move(-1, this, "L", 0);
 	}
 	
 	/**
@@ -399,15 +398,15 @@ public class GameBoard
 		if (boardChanged)
 		{
 			numberOfMoves++;
-			int tileValue = Math.random() < .9 ? 2: 4;
-			String location = (tileValue == 2) ? insertTwo(): insertFour();
+			//90% chance of inserting a 2, 10% of inserting a 4
+			String location = Math.random() < .9 ? insertTwo(): insertFour();
 			String swipe = "R";
-			Move l = new Move(numberOfMoves, swipe, location, tileValue, scoreAdd);
+			Move l = new Move(numberOfMoves, this, swipe, scoreAdd);
 			return l;
 		}
 		
 		//if nothing has changed
-		return new Move(-1, "R", "", 0, 0);
+		return new Move(-1, this, "R", 0);
 	}
 	
 	/**
@@ -486,15 +485,15 @@ public class GameBoard
 		if (boardChanged)
 		{
 			numberOfMoves++;
-			int tileValue = Math.random() < .9 ? 2: 4;
-			String location = (tileValue == 2) ? insertTwo(): insertFour();
+			//90% chance of inserting a 2, 10% of inserting a 4
+			String location = Math.random() < .9 ? insertTwo(): insertFour();
 			String swipe = "D";
-			Move l = new Move(numberOfMoves, swipe, location, tileValue, scoreAdd);
+			Move l = new Move(numberOfMoves, this, swipe, scoreAdd);
 			return l;
 		}
 		
 		//if nothing has changed
-		return new Move(-1, "D", "", 0, 0);
+		return new Move(-1, this, "D", 0);
 	}
 	
 	/**
@@ -574,15 +573,15 @@ public class GameBoard
 		if (boardChanged)
 		{
 			numberOfMoves++;
-			int tileValue = Math.random() < .9 ? 2: 4;
-			String location = (tileValue == 2) ? insertTwo(): insertFour();
+			//90% chance of inserting a 2, 10% of inserting a 4
+			String location = Math.random() < .9 ? insertTwo(): insertFour();
 			String swipe = "U";
-			Move l = new Move(numberOfMoves, swipe, location, tileValue, scoreAdd);
+			Move l = new Move(numberOfMoves, this, swipe, scoreAdd);
 			return l;
 		}
 		
 		//if nothing has changed
-		return new Move(-1, "U", "", 0, 0);
+		return new Move(-1, this, "U", 0);
 	}
 	
 	/**
