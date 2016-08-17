@@ -12,7 +12,6 @@ import java.util.concurrent.TimeoutException;
 public class GameThread extends Thread
 {
     private Socket socket = null;
-//    private GamePlayer player;
     private String netID = "";
     private GameDBAccess access;
     private int threadNumber;
