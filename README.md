@@ -66,7 +66,7 @@ For installing mysql on Ubuntu: https://www.digitalocean.com/community/tutorials
 For creating users and granting permissions: https://www.digitalocean.com/community/tutorials/how-to-create-a-new-user-and-grant-permissions-in-mysql
 
 How I created the game_stats table in the database:
-`CREATE TABLE game_stats(game_id VARCHAR(10), net_id VARCHAR(10), move_number INT, swipe VARCHAR(1), location VARCHAR(8), tile_value INT, score_add INT);`
+`CREATE TABLE game_stats2(game_id VARCHAR(10), net_id VARCHAR(10), move_number INT, swipe VARCHAR(1), score_add INT, ``` `0, 0` ``` INT, ``` `0, 1` ``` INT, ``` `0, 2` ``` INT, ``` `0, 3` ``` INT, ``` `1, 0` ``` INT, ``` `1, 1` ``` INT, ``` `1, 2` ``` INT, ``` `1, 3` ``` INT, ``` `2, 0` ``` INT, ``` `2, 1` ``` INT, ``` `2, 2` ``` INT, ``` `2, 3` ``` INT, ``` `3, 0` ``` INT, ``` `3, 1` ``` INT, ``` `3, 2` ``` INT, ``` `3, 3` ``` INT);`
 
 Try `DESCRIBE game_stats` to see if the table was created correctly.
 
