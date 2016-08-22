@@ -15,6 +15,7 @@
     "gulp": "^3.9.1",
     "react": "^15.3.0",
     "react-dom": "^15.3.0",
+    "react-router": "^2.7.0",
     "reactify": "^1.1.1",
     "vinyl-source-stream": "^1.1.0"
   }
