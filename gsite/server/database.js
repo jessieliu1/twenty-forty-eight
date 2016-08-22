@@ -23,7 +23,7 @@ exports.getRecords = function(strQuery, callback){
 	});
 };
 
-connection.connect(function(err) {
+/*connection.connect(function(err) {
 	if (err) throw err
 		console.log('Connection established')
-})
+})*/
