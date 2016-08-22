@@ -14,10 +14,7 @@ function render(){
 	var destination = document.getElementById("container")
 
 	ReactDOM.render(
-		<Router>
-			<Route path= component={}>
-			</Route>
-		</Router>,
+		<GamesList games={_games} />,
 		destination
 	);   
 
