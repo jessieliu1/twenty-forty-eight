@@ -4,6 +4,14 @@ var path = require("path");
 var app = express();
 app.use(express.static(path.join(__dirname,"../app/dist")));
 
+
+app.get('/', function (req, res) {
+  res.render(index);
+});
+
+
+
+/*
 var mysql = require('mysql')
 
 var pool = mysql.createPool({
@@ -14,6 +22,7 @@ var pool = mysql.createPool({
     multipleStatements: true
 
 });
+*/
 
 
 /*
@@ -42,7 +51,7 @@ pool.getConnection(function(err, connection) {
 
 
 
-
+/*
 app.get('/search', function(req, res){
     pool.getConnection(function(err, connection) {
         if(err) {console.log(err); return;}
@@ -50,6 +59,7 @@ app.get('/search', function(req, res){
         connection.query(/*'SELECT * FROM game_stats2 where '
             + 'game_id like "%'+req.query.key+'%" '
             +'OR net_ID like "%'+req.query.key+'%"',*/
+           /*
             'SELECT * FROM game_stats2 where game_id like 1.0 '
             +'AND net_id like "jll2219"', function(err, results){
             connection.release();
@@ -65,12 +75,11 @@ app.get('/search', function(req, res){
 
             /*callback(false, results);*/
             /*return results*/
-        });
+       /* });
 
     });
 });
-
-
+*/
 
 
 app.listen(3000,function(){
