@@ -15,6 +15,7 @@ var pool = mysql.createPool({
 
 });
 
+
 /*
 pool.getConnection(function(err, connection) {
     if(err) {console.log(err); return;}
@@ -54,8 +55,6 @@ app.get('/search', function(req, res){
             connection.release();
             if(err) {console.log(err); return;}
 
-            res.end(JSON.stringify(results))
-
             var data=[];
             for(i=0;i<results.length;i++)
             {
@@ -71,24 +70,6 @@ app.get('/search', function(req, res){
     });
 });
 
-
-
-
-
-
-// var mysql = require('mysql')
-
-// var connection = mysql.createConnection({
-//  host: 'localhost',
-//  user: 'root',
-//  password: 'bl00p',
-//  database: 'tester'
-// })
-
-// connection.connect(function(err) {
-//  if (err) throw err
-//      console.log('Connection established')
-// })
 
 
 
