@@ -191,7 +191,19 @@
 
             });
 
-            $('')
+            $('#next-button').click(function(){
+                if (window.move_number < window.data_table.length - 1) {
+                    window.move_number += 1;
+                    displayGameBoard(window.move_number);
+                }
+            })
+
+            $('#back-button').click(function(){
+                if (window.move_number > 0) {
+                    window.move_number -= 1;
+                    displayGameBoard(window.move_number);
+                }
+            })
 
 
 
@@ -246,8 +258,8 @@
         <canvas id="gameboard" width="400" height="400"></canvas>
     
         <div class="container-fluid" id="prev-next">
+            <button type="button" class="btn btn-default" id="prev-button">Prev</button>
             <button type="button" class="btn btn-default" id="next-button">Next</button>
-            <button type="button" class="btn btn-default" id="prev-button">Previous</button>
         </div>
 
     </div>
