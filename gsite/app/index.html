@@ -6,13 +6,13 @@
 <link rel="stylesheet" href="/app/dist/bootstrap.css" /> -->
 
 <head>
-    <meta charset="UTF-8">
+   <meta charset="UTF-8">
     <title>2048</title>
 
     <!--<link href="bootstrap.min.css" rel="stylesheet" />
-    <link href="style.css" rel="stylesheet" /> -->
+    <link href="style.css" rel="stylesheet"/> -->
 
-    <!-- jQuery and bootstrap -->
+    <!-- jQuery and bootstrap-->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 
@@ -54,7 +54,93 @@
             table += body;
 
             return table;
-        }
+        };
+
+
+        function displayGameBoard(){
+            
+            if (window.data_table.length > 0)
+            {   
+                var board = [];
+                for (var i = 0; i < 4; i++){
+                    board[i] = [];
+                    
+                    for (var j = 0; j < 4; j++){
+                        var key = i+', ' +j;
+                        board[i][j] = window.data_table[172][key];
+                    }
+                }
+
+                var cvs = document.getElementById("gameboard");
+                var ctx = cvs.getContext("2d");
+
+                spacing = 10;
+                ctx.fillStyle = "rgb(182,172,158)";
+
+                ctx.fillRect(0, 0, cvs.width, cvs.height);
+                tileWidth = (cvs.width - 5 * spacing) / 4;
+
+                colors_dictionary={
+                    0: ["rgb(201,192,178)"],
+                    2: ["rgb(235,227,217)"],
+                    4: ["rgb(233,223,199)"],
+                    8: ["rgb(242,177,121)"],
+                    16: ["rgb(245,149,99)"],
+                    32: ["rgb(246,124,95)"],
+                    64: ["rgb(246,94,59)"],
+                    128: ["rgb(237,207,114)"],
+                    256: ["rgb(237,204,97)"],
+                    512: ["rgb(237,200,80)"],
+                    1024: ["rgb(237,197,63)"],
+                    2048: ["rgb(237,194,46)"]
+                };
+
+    
+                   
+
+                for (i = 0; i < 4; i++) {
+                     for (j = 0; j < 4; j++) {
+                        var x = ((j + 1) * spacing) + (j * tileWidth);
+                        var y = ((i + 1) * spacing) + (i * tileWidth);
+
+                        tileVal = board[i][j];
+
+                        ctx.fillStyle = colors_dictionary[tileVal][0];
+                        ctx.fillRect(x, y, tileWidth, tileWidth);
+
+                        if (tileVal != 0)
+                        {
+                            if (tileVal > 4){
+                                ctx.fillStyle = "rgb(255,255,255)";
+                            }
+                            else{
+                                ctx.fillStyle = "rgb(119,110,101)";
+                            }
+
+                            if (tileVal > 512){
+                                var fontSize = 24;
+                                ctx.font = "24px Futura";
+                            }
+                            else{
+                                var fontSize = 34;
+                                ctx.font = "34px Futura";
+                            }
+                            ctx.textAlign = "center";
+                            ctx.fillText(board[i][j], x + tileWidth/2,
+                                y + spacing + tileWidth/2);
+                            ctx.stroke();
+                        }
+
+                        } 
+                    }
+
+            }
+
+            else
+            {
+                $('#logger').html("well, shoot");
+            }
+        };
 
 
 
@@ -94,7 +180,7 @@
                     complete: function (data) {
                         window.data_table = JSON.parse(data.responseText);
                         displayResultsTable();
-                        
+                        displayGameBoard();
                     }
                 });
 
@@ -113,8 +199,8 @@
 
 <nav class="navbar navbar-default">
     <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
+    <!-- Brand and toggle get grouped for better mobile display-->
+    <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav-collapse" aria-expanded="false">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
@@ -124,7 +210,7 @@
             <a class="navbar-brand" rel="home" href="/">2048</a>
         </div>
 
-    <!-- Collect the nav links, forms, and other content for toggling -->
+    <!-- Collect the nav links, forms, and other content for toggling-->
     <div class="collapse navbar-collapse" id="nav-collapse">
         <ul class="nav navbar-nav">
         </ul>
@@ -141,8 +227,8 @@
         </ul>
 
 
-    </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
+    </div><!-- /.navbar-collapse :-->
+    </div><!-- /.container-fluid :-->
 </nav>
 
 <body>
@@ -150,6 +236,13 @@
 
         <canvas id="gameboard" width="400" height="400"></canvas>
     
+
+
+
+    </div>
+
+    <div class="container-fluid" id="logger">
+
     </div>
 
     <div class="container-fluid" id="table-results">
