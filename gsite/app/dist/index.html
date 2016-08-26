@@ -142,7 +142,10 @@
 
             else
             {
-                $('#logger').html("Can't show board");
+                var cvs = document.getElementById("gameboard");
+                var ctx = cvs.getContext("2d");
+                ctx.fillStyle = "rgb(119,136,153)";
+                ctx.fillRect(0, 0, cvs.width, cvs.height);
             }
         };
 
@@ -161,6 +164,10 @@
         };
 
         $(document).ready(function() {
+            $('#next-button').hide();
+            $('#prev-button').hide();
+
+
             $('#search-text').keypress(function(event){
                 //prevent page refresh when pressing enter
                 //submit search when pressing enter
@@ -186,6 +193,8 @@
                         window.move_number = 0
                         displayResultsTable();
                         displayGameBoard(window.move_number);
+                        $('#next-button').show();
+                        $('#prev-button').show();
                     }
                 });
 
@@ -204,18 +213,8 @@
                     displayGameBoard(window.move_number);
                 }
             });
-
-
-
         });
-
-
-
-
-
     </script>
-
-
 </head>
 
 <nav class="navbar navbar-default">
@@ -261,10 +260,6 @@
             <button type="button" class="btn btn-default" id="prev-button">Prev</button>
             <button type="button" class="btn btn-default" id="next-button">Next</button>
         </div>
-
-    </div>
-
-    <div class="container-fluid" id="logger">
 
     </div>
 
