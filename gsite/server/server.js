@@ -10,44 +10,40 @@ app.get('/', function (req, res) {
 });
 
 
+var config = require('config');
+var dbConfig = config.get('dbConfig');
+var dbTable = config.get('dbTable');
 
-/*
 var mysql = require('mysql')
 
-var pool = mysql.createPool({
-    host: 'localhost',
-    user: 'root',
-    password: 'bl00p',
-    database: 'tester',
-    multipleStatements: true
+var pool = mysql.createPool(dbConfig);
 
-});
-*/
-
-
-/*
-pool.getConnection(function(err, connection) {
-    if(err) {console.log(err); return;}
-    
-    connection.query('SELECT * FROM game_stats2 where '
-        + 'game_id like 1.0'
-        +'OR net_ID like "jll2219"', function(err, results){
-        connection.release();
-        if(err) {console.log(err); return;}
-
-        var data=[];
-        for(i=0;i<results.length;i++)
-        {
-            data.push(results[i]);
+app.get('/search', function(req, res) {
+    //get connection from pool
+    pool.getConnection(function(err, conn){
+        if (err) {
+            console.log(err);
+            return;
         }
-        console.log(data)
-        -res.end(JSON.stringify(data));
 
-        -callback(false, results);
-        -return results
-    });
+        console.log(req.query.q);
+        conn.query('SELECT * FROM ' + dbTable.table 
+            + ' WHERE game_id LIKE ? OR net_ID LIKE ?', [req.query.q, req.query.q],
+            function (err, result) {
+                conn.release();
+                if (err) {
+                    console.log(err);
+                    return;
+                }
+                console.log(JSON.stringify(result))
+                res.end(JSON.stringify(result));
 
-}); */
+            });
+
+    })
+});
+
+
 
 
 

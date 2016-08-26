@@ -47,23 +47,23 @@ public class Game
 		{
 			if (nextMove.toUpperCase().equals("L"))
 			{
-				lastMove = board.swipeLeft();
-				score += lastMove.getScoreAdd();
+				lastMove = board.swipeLeft(getScore());
+				score = lastMove.getNewScore();
 			}
 			else if (nextMove.toUpperCase().equals("R"))
 			{
-				lastMove = board.swipeRight();
-				score += lastMove.getScoreAdd();
+				lastMove = board.swipeRight(getScore());
+				score = lastMove.getNewScore();
 			}
 			else if (nextMove.toUpperCase().equals("U"))
 			{
-				lastMove = board.swipeUp();
-				score += lastMove.getScoreAdd();
+				lastMove = board.swipeUp(getScore());
+				score = lastMove.getNewScore();
 			}
 			else if (nextMove.toUpperCase().equals("D"))
 			{
-				lastMove = board.swipeDown();
-				score += lastMove.getScoreAdd();
+				lastMove = board.swipeDown(getScore());
+				score = lastMove.getNewScore();
 			}
 			else 
 			{

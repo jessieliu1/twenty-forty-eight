@@ -222,9 +222,10 @@ public class GameBoard
 	
 	/**
 	 * Swipes left, collapsing appropriate tiles. Adds a new 2 tile.
-	 * @return the addition to the score after the swipe
+	 * @param the current score
+	 * @return a move with the new game board, move number, swipe, and new score
 	 */
-	public Move swipeLeft()
+	public Move swipeLeft(int currScore)
 	{
 		int scoreAdd = 0;
 		boolean boardChanged = false;
@@ -313,19 +314,20 @@ public class GameBoard
 			//90% chance of inserting a 2, 10% of inserting a 4
 			String location = Math.random() < .9 ? insertTwo(): insertFour();
 			String swipe = "L";
-			Move l = new Move(numberOfMoves, this, swipe, scoreAdd);
+			Move l = new Move(numberOfMoves, this, swipe, currScore+scoreAdd);
 			return l;
 		}
 		
 		//if nothing has changed
-		return new Move(-1, this, "L", 0);
+		return new Move(-1, this, "L", currScore);
 	}
 	
 	/**
 	 * Swipes right, collapsing appropriate tiles. Adds a new 2 tile.
-	 * @return the addition to the score after the swipe
+	 * @param the current score
+	 * @return a move with the new game board, move number, swipe, and new score
 	 */
-	public Move swipeRight()
+	public Move swipeRight(int currScore)
 	{
 		int scoreAdd = 0;
 		boolean boardChanged = false;
@@ -401,19 +403,20 @@ public class GameBoard
 			//90% chance of inserting a 2, 10% of inserting a 4
 			String location = Math.random() < .9 ? insertTwo(): insertFour();
 			String swipe = "R";
-			Move l = new Move(numberOfMoves, this, swipe, scoreAdd);
+			Move l = new Move(numberOfMoves, this, swipe, currScore + scoreAdd);
 			return l;
 		}
 		
 		//if nothing has changed
-		return new Move(-1, this, "R", 0);
+		return new Move(-1, this, "R", currScore);
 	}
 	
 	/**
 	 * Swipes down, collapsing appropriate tiles. Adds a new 2 tile.
-	 * @return the addition to the score after the swipe
+	 * @param the current score
+	 * @return a move with the new game board, move number, swipe, and new score
 	 */
-	public Move swipeDown()
+	public Move swipeDown(int currScore)
 	{
 		int scoreAdd = 0;
 		boolean boardChanged = false;
@@ -488,19 +491,20 @@ public class GameBoard
 			//90% chance of inserting a 2, 10% of inserting a 4
 			String location = Math.random() < .9 ? insertTwo(): insertFour();
 			String swipe = "D";
-			Move l = new Move(numberOfMoves, this, swipe, scoreAdd);
+			Move l = new Move(numberOfMoves, this, swipe, currScore + scoreAdd);
 			return l;
 		}
 		
 		//if nothing has changed
-		return new Move(-1, this, "D", 0);
+		return new Move(-1, this, "D", currScore);
 	}
 	
 	/**
 	 * Swipes up, collapsing appropriate tiles. Adds a new 2 tile.
-	 * @return the addition to the score after the swipe
+	 * @param the current score
+	 * @return a move with the new game board, move number, swipe, and new score
 	 */
-	public Move swipeUp()
+	public Move swipeUp(int currScore)
 	{
 		int scoreAdd = 0;
 		boolean boardChanged = false; 
@@ -576,12 +580,12 @@ public class GameBoard
 			//90% chance of inserting a 2, 10% of inserting a 4
 			String location = Math.random() < .9 ? insertTwo(): insertFour();
 			String swipe = "U";
-			Move l = new Move(numberOfMoves, this, swipe, scoreAdd);
+			Move l = new Move(numberOfMoves, this, swipe, currScore + scoreAdd);
 			return l;
 		}
 		
 		//if nothing has changed
-		return new Move(-1, this, "U", 0);
+		return new Move(-1, this, "U", currScore);
 	}
 	
 	/**

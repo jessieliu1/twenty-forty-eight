@@ -35,7 +35,7 @@ public class GameServer
 				System.out.println("Server Listening");				
 				Socket connection = server.accept();
 				
-				new GameThread(connection, counter++, "tester", "game_stats2").start();
+				new GameThread(connection, counter++, "tester", "game_stats").start();
 			}
 		}
 		catch(IOException io)

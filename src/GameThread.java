@@ -1,7 +1,6 @@
 import java.net.*;
 import java.sql.SQLException;
 import java.io.*;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -125,7 +124,8 @@ public class GameThread extends Thread
 				    					{
 				    						
 				    						out.println(gb.toString().replace("\n", ";") 
-				    								+ ";Game Over! Score was " + g.getScore());
+				    								+ ";Game Over! Score was " + g.getScore() 
+				    								+ " and game id is " + g.getID());
 				    					}
 				    				}
 				    				

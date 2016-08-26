@@ -5,6 +5,7 @@
 
     <body>
     <?php
+        //header("Access-Control-Allow-Origin: *");
         //get the query params
         $q=strval($_GET['q']);
 
@@ -16,8 +17,8 @@
         $result = mysqli_query($con,$sql);
 
         //put results into a table
-        echo "
-            <table class="table table-hover">
+        $text=<<<END
+            <table class= "table table-hover">
                 <thead>
                     <tr>
                         <th>game_id</th>
@@ -42,10 +43,13 @@
                         <th>3, 2</th>
                         <th>3, 3</th>
                     </tr>
-                </thead>";
+                </thead> 
+END;
+        echo $text;
 
         //populate table       
         while($row = mysqli_fetch_array($result)){
+            echo "<tbody>";
             echo "<tr>";
             echo "<td>" . $row['game_id'] . "</td>";
             echo "<td>" . $row['net_id'] . "</td>";
@@ -68,6 +72,7 @@
             echo "<td>" . $row['3, 2'] . "</td>";
             echo "<td>" . $row['3, 3'] . "</td>";
             echo "<tr>";
+            echo "</tbody>";
         }
         echo "</table>";
         mysqli_close($con);

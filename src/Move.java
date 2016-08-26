@@ -8,14 +8,14 @@ public class Move
 	private int moveNumber;
 	private GameBoard board;
 	private String swipe;
-	private int scoreAdd;
+	private int newScore;
 	
 	public Move (int num, GameBoard gb, String swipe, int score)
 	{
 		moveNumber = num;
 		board = gb;
 		this.swipe = swipe.toUpperCase();
-		scoreAdd = score;
+		newScore = score;
 	}
 	
 	public int getMoveNumber()
@@ -33,8 +33,8 @@ public class Move
 		return swipe;
 	}
 	
-	public int getScoreAdd()
+	public int getNewScore()
 	{
-		return scoreAdd;
+		return newScore;
 	}
 }

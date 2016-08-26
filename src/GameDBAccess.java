@@ -10,8 +10,8 @@ public class GameDBAccess
 	//URL of the database
 	//autoReconnect and useSSL parameters will disable SSL and also suppress the SSL errors.
     public static final String URL = "jdbc:mysql://localhost:3306/tester?autoReconnect=true&useSSL=false";
-    public static final String USER = "jessieliu";
-    public static final String PASSWORD = "catzcatz";
+    public static final String USER = "root";
+    public static final String PASSWORD = "bl00p";
     public static final String DRIVER_CLASS = "com.mysql.jdbc.Driver"; 
     
     private Connection connect;
@@ -60,7 +60,7 @@ public class GameDBAccess
     	  insertStatement.setString(2, netID);
     	  insertStatement.setInt(3, move.getMoveNumber());
     	  insertStatement.setString(4, move.getSwipe());
-    	  insertStatement.setInt(5, move.getScoreAdd());
+    	  insertStatement.setInt(5, move.getNewScore());
     	  NumberTile[][] numBoard = move.getBoard().toArray();
     	  
     	  //the current values on the board
