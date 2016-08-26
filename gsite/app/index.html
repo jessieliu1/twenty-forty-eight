@@ -57,7 +57,7 @@
         };
 
 
-        function displayGameBoard(){
+        function displayGameBoard(move_num){
             
             if (window.data_table.length > 0)
             {   
@@ -67,7 +67,7 @@
                     
                     for (var j = 0; j < 4; j++){
                         var key = i+', ' +j;
-                        board[i][j] = window.data_table[172][key];
+                        board[i][j] = window.data_table[move_num][key];
                     }
                 }
 
@@ -92,11 +92,9 @@
                     256: ["rgb(237,204,97)"],
                     512: ["rgb(237,200,80)"],
                     1024: ["rgb(237,197,63)"],
-                    2048: ["rgb(237,194,46)"]
+                    2048: ["rgb(237,194,46)"],
+                    other: ["rgb(0,0,0)"]
                 };
-
-    
-                   
 
                 for (i = 0; i < 4; i++) {
                      for (j = 0; j < 4; j++) {
@@ -104,9 +102,15 @@
                         var y = ((i + 1) * spacing) + (i * tileWidth);
 
                         tileVal = board[i][j];
-
-                        ctx.fillStyle = colors_dictionary[tileVal][0];
-                        ctx.fillRect(x, y, tileWidth, tileWidth);
+                        if (tileVal <= 2048){
+                            ctx.fillStyle = colors_dictionary[tileVal][0];
+                            ctx.fillRect(x, y, tileWidth, tileWidth); 
+                        }
+                        else{
+                            ctx.fillStyle = colors_dictionary["other"][0];
+                            ctx.fillRect(x, y, tileWidth, tileWidth); 
+                        }
+                        
 
                         if (tileVal != 0)
                         {
@@ -118,8 +122,8 @@
                             }
 
                             if (tileVal > 512){
-                                var fontSize = 24;
-                                ctx.font = "24px Futura";
+                                var fontSize = 28;
+                                ctx.font = "28px Futura";
                             }
                             else{
                                 var fontSize = 34;
@@ -138,7 +142,7 @@
 
             else
             {
-                $('#logger').html("well, shoot");
+                $('#logger').html("Can't show board");
             }
         };
 
@@ -180,7 +184,7 @@
                     complete: function (data) {
                         window.data_table = JSON.parse(data.responseText);
                         displayResultsTable();
-                        displayGameBoard();
+                        displayGameBoard(0);
                     }
                 });
 
