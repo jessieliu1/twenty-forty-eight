@@ -183,12 +183,17 @@
                     data: payload,
                     complete: function (data) {
                         window.data_table = JSON.parse(data.responseText);
+                        window.move_number = 0
                         displayResultsTable();
-                        displayGameBoard(0);
+                        displayGameBoard(window.move_number);
                     }
                 });
 
             });
+
+            $('')
+
+
 
         });
 
@@ -240,8 +245,10 @@
 
         <canvas id="gameboard" width="400" height="400"></canvas>
     
-
-
+        <div class="container-fluid" id="prev-next">
+            <button type="button" class="btn btn-default" id="next-button">Next</button>
+            <button type="button" class="btn btn-default" id="prev-button">Previous</button>
+        </div>
 
     </div>
 
