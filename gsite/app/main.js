@@ -194,7 +194,7 @@ function buildHTMLtable(jobject){
             $('#next-button').click(function(){
                 if (window.move_number < window.data_table.length - 1) {
                     window.move_number += 1;
-                    updateLabels(window.move_number);
+                    updateLabels(window.data_table[window.move_number]["move_number"]);
                     displayGameBoard(window.move_number);
                 }
             });

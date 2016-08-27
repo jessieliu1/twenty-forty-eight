@@ -27,7 +27,7 @@ app.get('/search', function(req, res) {
             return;
         }
 
-        console.log(req.query.q);
+        //console.log(req.query.q);
         conn.query('SELECT * FROM ' + dbTable.table 
             + ' WHERE game_id LIKE ? OR net_ID LIKE ?', [req.query.q, req.query.q],
             function (err, result) {
