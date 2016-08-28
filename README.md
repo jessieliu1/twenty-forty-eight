@@ -169,3 +169,7 @@ gsite
 
 Running `gulp` copies over a minified version of main.js and index.html to the dist directory in app. 
 
+####Todo:
+Animate game board to play through entire game without needing to click through
+Be able to choose which move appears on the board directly/ click a row to show the move on the board
+
