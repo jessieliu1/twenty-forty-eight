@@ -46,31 +46,31 @@ After connected to the server, this message should be printed to the console:
 
 ##Class Overview
 ----
-###NumberTile
+### NumberTile
 `NumberTiles` can have a value or can also be empty (have a value of 0.) The string version of an empty tile is "-" to not clutter the board when printing to the console. "Empty" `GameBoards` should be filled with NumberTiles of value 0.
 
-###GameBoard
+### GameBoard
 A GameBoard has methods for swiping left, right, up and down, and can also be constructed to have a custom square dimension (it defaults to being a 4x4 board.) The methods for swiping return a `Move`. `toString()` converts and formats the board into a String, where each row is a new line.
 
-###Move
+### Move
 Stores information from each swipe - the location of the new `NumberTile` added, the swipe, and the new score.
 
-###Thinker
+### Thinker
 `Thinker` is an interface with one method: `nextMove(GameBoard gb)`. Classes that implement this interface are intended to find the next move, given a board. An example is `RandomThinker` which chooses the next move randomly. In other Thinkers other methods could be added to help make smarter choices for the next move.
 
-###Game
+### Game
 Each `Game` has a `GameBoard`, a `GamePlayer`, and a score. The game advances when `playNextMove(String move)` is called on a Game object, which takes in a swipe and throws an exception if the swipe isn't L, R, U, or D. This method alters the game's Board, updates the score, and returns the updated board.  
 
-###GameClient
+### GameClient
 `GameClient` has one public method, `startRunning()`, which connects to the server using the IP and port number specified in the constructor. Exceptions `UnknownHostException` and `IOException` can be thrown, usually when the server is listening on a different port, the wrong IP address is used, or the client program starts before the server program is running. When connection is established, a message is printed to the console running the `Client` program. Within `startRunning()`, the `Thinker` object that is passed in through the constructor is used to send moves to the server. While there is still information from the server being sent, the program prints the input from the server to the console. If the server input is a board, the `Thinker`'s `nextMove(GameBoard gb)` method will be called to get the next move and that move will be sent back to the server. The server input is known to be a board if the message contains a semicolon character: ";". An important caveat is that _no non-board messages can contain a semicolon_. This is kind of annoying, but is a workaround for the fact that the BufferedReader only takes in one line at a time and the board spans multiple lines. So the new line characters at the end of each row of the board are replaced with a semicolon when they are sent to the client. If the server input is not a board, the client waits for the user to manually enter input that it will send to the server. If the server input includes the words "Game Over!" the client exits the system.
 
-###GameServer
+### GameServer
 Has one method: `startRunning()`. Creates a new ServerSocket listening on a specific port, and with a specific maximum queue length for incoming connection indications. Currently that max queue length is hard coded at 100, but this can be changed. Every time a connection is made to the server from a client (`GameClient`), a new `GameThread` is created to deal with the Client.
 
-###GameThread
+### GameThread
 Threads do the actual playing of the game with client. A `Game` is created. After requesting the information like a NetID, the board is sent as a String to the client. Note: The String version of the board is different from just the `toString()` method of `GameBoard` - the Client only reads one line of input at a time, so instead of line breaks after each row, the "\n" character is replaced with a semicolon. No non-board messages can contain a semicolon. The `GameThread` interprets client input of moves by playing the move on the board and sending it back.
 
-##MySQL
+## MySQL
 Digital Ocean has some really great MySQL tutorials.
 
 Basic MySQL: https://www.digitalocean.com/community/tutorials/a-basic-mysql-tutorial
@@ -84,7 +84,7 @@ How I created the game_stats table in the database (which I named `tester`):
 
 Try `DESCRIBE game_stats` to see if the table was created correctly.
 
-###Database access
+### Database access
 
 The `GameThread` class accesses the database through a  `GameDBAccess` object which requires a specific database name and table name, though the database name is hardcoded into the URL needed to get access within the `GameDBAccess` constant fields. The URL is in this format: `jdbc:<DBMS>://<HOSTNAME>:<PORT_NUMBER>/YOUR_DATABASE_NAME`. The hostname of the database can be found with the MySQL command `SHOW VARIABLES WHERE Variable_name = 'hostname'`. This hostname is different from the hostname that the client uses to access the server (the public IP). To change what database and table to write to, modify the constant fields within the `GameDBAccess` class and alter how the `GameDBAccess` object is constructed within the `GameThread` class (change the string name of the database/table). Same goes for changing the user/password - look into the constants in the `GameDBAccess` class.
 
@@ -100,7 +100,7 @@ http://stackoverflow.com/questions/5715235/java-set-timeout-on-a-certain-block-o
 The combination of an ExecutorService Java object and a Future object are used to timeout of game session. 
 
 ---
-##Javascript
+## Javascript
 
 The design and set up of this project was largely inspired by this tutorial: (Part 1: http://www.codeproject.com/Articles/1067725/Part-Building-web-app-using-react-js-express-js). 
 
@@ -117,7 +117,7 @@ First, from the root directory (currently named gsite) create and edit a config 
 
 `$ vim config/default.json` or create and open `default.json` with an editor of your choice.
 This is the default.json set up I used: 
-####default.json
+#### default.json
 <pre><code>
   {
   	"dbConfig": {
@@ -137,7 +137,7 @@ This is used to set up the mysql connection from node. config is required in `se
 While in the root project directory (currently named gsite), call 
 `npm install`, which should install all the necessary dependencies (listed in the package.json file). Still in the root directory, run `gulp` which minifies the javascript, then run `node server/server.js` which will start the server. Navigate to http://hostname:portnumber (mine is localhost:3000), and hopefully the page shows up.
 
-###Running on AWS
+### Running on AWS
 I haven't attempted running the app on AWS but here are some links that can be used in varying degrees to assist in the process:
 
 https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-an-ubuntu-14-04-server
@@ -150,7 +150,7 @@ https://scotch.io/tutorials/deploying-a-mean-app-to-amazon-ec2-part-1
 
 Also, make sure that the security groups are configured so that connections to the MySQL database and client connections can be made (the appropriate ports are open).
 
-###Basic code overview
+### Basic code overview
 <pre><code>
 gsite
   -app
@@ -169,7 +169,7 @@ gsite
 
 Running `gulp` copies over a minified version of main.js and index.html to the dist directory in app. 
 
-####Next Steps for website:
+#### Next Steps for website:
 1. Animate game board to play through entire game without needing to click through
 2. Be able to choose which move appears on the board directly/ click a row in the results table to show the move on the board
 
